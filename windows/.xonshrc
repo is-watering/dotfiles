@@ -1,0 +1,13 @@
+import _locale
+_locale._getdefaultlocale = (lambda *args: ['ja_JP', 'utf_8'])
+
+$XONSH_COLOR_STYLE = 'trac'
+$INTENSIFY_COLORS_ON_WIN = False
+$PROMPT = "{YELLOW}[ {short_cwd} ] {INTENSE_RED}{curr_branch} {INTENSE_CYAN}λ  "
+# $UPDATE_COMPLETIONS_ON_KEYPRESS = True # キー入力即評価
+$CASE_SENSITIVE_COMPLETIONS = False # 補完時に大小区別しない
+$HISTCONTROL = "ignoredups" # 連続重複コマンドを保存しない
+$XONSH_AUTOPAIR = True # 括弧を補完
+$AUTO_CD = True # ディレクトリ名を入力でcd
+
+aliases['ls'] = "ls.exe --color=auto"
