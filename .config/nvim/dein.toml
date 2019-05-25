@@ -1,0 +1,288 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+hook_add = '''
+  nnoremap <silent> <Leader>P :<C-u>Deol -command='fish' -split='horizontal'<CR>
+  tnoremap <ESC> <C-\><C-n>
+'''
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertEnter'
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#auto_complete_delay = 0
+  let g:deoplete#auto_complete_start_length = 1
+'''
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'alvan/vim-closetag'
+hook_add = '''
+  let g:closetag_filetypes = 'html,jinja'
+'''
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+  call denite#custom#option('default', {
+      \ 'direction': 'botright',
+      \ 'split': 'horizontal',
+      \ 'winheight': 8,
+      \ 'winwidth': 20,
+      \ })
+    
+  nnoremap <silent> <Leader>b :<C-u>Denite buffer -mode=normal<CR>
+  nnoremap <silent> <Leader>r :<C-u>Denite register -mode=normal<CR>
+'''
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+hook_add = '''
+  nnoremap <silent> <Leader>h :History<CR>
+'''
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = '''
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+  
+  call defx#custom#option('_', {
+      \ 'direction': 'topleft',
+      \ 'toggle': 1,
+      \ 'split': 'vertical',
+      \ 'winwidth': 28,
+      \ })
+            
+  nnoremap <silent><C-e> :Defx -auto-cd -resume `expand('%:p:h')`<CR>
+  
+  autocmd FileType defx call s:defx_my_settings()
+  function! s:defx_my_settings() abort
+    " Define mappings
+    nnoremap <silent><buffer><expr> <CR>
+    \ defx#is_directory() ? defx#do_action('open') :
+    \ defx#do_action('multi', ['drop', 'quit'])
+    nnoremap <silent><buffer><expr> c
+    \ defx#do_action('copy')
+    nnoremap <silent><buffer><expr> m
+    \ defx#do_action('move')
+    nnoremap <silent><buffer><expr> p
+    \ defx#do_action('paste')
+    nnoremap <silent><buffer><expr> l
+    \ defx#is_directory() ? defx#do_action('open') :
+    \ defx#do_action('multi', ['drop', 'quit'])
+    nnoremap <silent><buffer><expr> E
+    \ defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr> P
+    \ defx#do_action('open', 'pedit')
+    nnoremap <silent><buffer><expr> o
+    \ defx#do_action('open_or_close_tree')
+    nnoremap <silent><buffer><expr> K
+    \ defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> N
+    \ defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> M
+    \ defx#do_action('new_multiple_files')
+    nnoremap <silent><buffer><expr> C
+    \ defx#do_action('toggle_columns',
+    \                'mark:indent:icon:filename:type:size:time')
+    nnoremap <silent><buffer><expr> S
+    \ defx#do_action('toggle_sort', 'time')
+    nnoremap <silent><buffer><expr> d
+    \ defx#do_action('remove')
+    nnoremap <silent><buffer><expr> r
+    \ defx#do_action('rename')
+    nnoremap <silent><buffer><expr> !
+    \ defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> x
+    \ defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr> yy
+    \ defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr> .
+    \ defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> ;
+    \ defx#do_action('repeat')
+    nnoremap <silent><buffer><expr> h
+    \ defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr> ~
+    \ defx#do_action('cd')
+    nnoremap <silent><buffer><expr> q
+    \ defx#do_action('quit')
+    nnoremap <silent><buffer><expr> <Space>
+    \ defx#do_action('toggle_select') . 'j'
+    nnoremap <silent><buffer><expr> *
+    \ defx#do_action('toggle_select_all')
+    nnoremap <silent><buffer><expr> j
+    \ line('.') == line('$') ? 'gg' : 'j'
+    nnoremap <silent><buffer><expr> k
+    \ line('.') == 1 ? 'G' : 'k'
+    nnoremap <silent><buffer><expr> <C-l>
+    \ defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> <C-g>
+    \ defx#do_action('print')
+    nnoremap <silent><buffer><expr> cd
+    \ defx#do_action('change_vim_cwd')
+  endfunction
+'''
+
+# [[plugins]]
+# repo = 'cocopon/vaffle.vim'
+# hook_add = '''
+#   nnoremap <silent><C-e> :Vaffle<CR>
+#   
+#   let g:vaffle_auto_cd = 1
+# '''
+
+# [[plugins]]
+# repo = 'scrooloose/nerdtree'
+# hook_add = '''
+# nnoremap <silent><expr> <C-e> g:NERDTree.IsOpen() ? ":NERDTreeClose\<CR>" : ":NERDTreeFind\<CR>"
+#     let g:NERDTreeWinSize = 28
+#     " ファイルを開いたらNERDTreeを閉じる
+#     let g:NERDTreeQuitOnOpen=1
+#     " NERDTreeを同時に閉じる
+#     autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+# '''
+
+[[plugins]]
+repo = 'skanehira/vsession'
+hook_add = '''
+  nnoremap <Leader>se :SaveSession 
+  nnoremap <Leader>lse :FloadSession<CR>
+'''
+
+# [[plugins]]
+# repo = 'severin-lemaignan/vim-minimap'
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_add = '''
+  let g:indent_guides_enable_on_vim_startup = 1
+  let g:indent_guides_auto_colors = 0
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=236
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=237
+'''
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+hook_add = '''
+  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {
+    \ 'colorscheme': 'powerline',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+    \   'right': [ [ 'lineinfo' ],
+    \              [ 'percent' ],
+    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \  },
+    \ 'component_function': {
+    \   'gitbranch': 'LightLineFugitive'
+    \  },
+    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
+    \ }
+    
+  function! LightLineFugitive()
+    try
+      if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+        let mark = ' '  " edit here for cool mark
+        let _ = fugitive#head()
+        return strlen(_) ? mark._ : ''
+      endif
+    catch
+    endtry
+    return ''
+  endfunction
+'''
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+depends = ['lightline.vim']
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+  let g:user_emmet_mode = 'iv'
+  let g:user_emmet_settings = {
+    \ 'variables' : {
+    \   'lang' : 'ja'
+    \   }
+    \ }
+  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+on_event = 'InsertEnter'
+depends = ['deoplete.nvim']
+hook_add = '''
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+  let g:neosnippet#scope_aliases = {}
+  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
+  
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+depends = ['neosnippet.vim']
+
+# [[plugins]]
+# repo = 'honza/vim-snippets'
+# depends = ['neosnippet.vim']
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+depends = ['deoplete.nvim']
+hook_add = '''
+  if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#same_filetypes = {}
+  endif
+  let g:context_filetype#same_filetypes.html = 'pcss'
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+hook_add = '''
+  autocmd FileType jinja setlocal commentstring={#\ %s\ #}
+'''
+
+[[plugins]]
+repo = 'Valloric/MatchTagAlways'
+
+
+[[plugins]] # カラースキーマ
+repo = 'vim-scripts/twilight256.vim'

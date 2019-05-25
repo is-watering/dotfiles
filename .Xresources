@@ -1,0 +1,94 @@
+!! ~/.Xresources
+
+!!
+!! rxvt-unicode (urxvt)
+!!
+
+URxvt.geometry:             86x32
+URxvt.scrollBar_right:      true
+URxvt.scrollBar_floating:   true
+URxvt.scrollstyle:          xterm
+URxvt.cursorBlink:          true
+URxvt.cursorUnderline:      true
+URxvt.pointerBlank:         true
+URxvt.visualBell:           true
+URxvt.saveLines:            3000
+URxvt.fading:               40
+
+!! Font list and Spacing
+URxvt.font:                 xft:Cica:size=14,\
+                            xft:Inconsolata Nerd Font Mono
+URxvt.letterSpace:          0
+!URxvt.lineSpace:           0
+
+!! Color Scheme and Opacity - gruvbox-dark https://github.com/morhetz/gruvbox
+URxvt.depth:                32
+URxvt.color0:               [90]#282828
+URxvt.color1:               [90]#cc241d
+URxvt.color2:               [90]#98971a
+URxvt.color3:               [90]#d79921
+URxvt.color4:               [90]#458588
+URxvt.color5:               [90]#b16286
+URxvt.color6:               [90]#689d6a
+URxvt.color7:               [90]#a89984
+URxvt.color8:               [90]#928374
+URxvt.color9:               [90]#fb4934
+URxvt.color10:              [90]#b8bb26
+URxvt.color11:              [90]#fabd2f
+URxvt.color12:              [90]#83a598
+URxvt.color13:              [90]#d3869b
+URxvt.color14:              [90]#8ec07c
+URxvt.color15:              [90]#ebdbb2
+URxvt.foreground:           [90]#ebdbb2
+URxvt.background:           [90]#282828
+URxvt.colorIT:              [90]#8ec07c
+URxvt.colorBD:              [90]#d5c4a1
+URxvt.colorUL:              [90]#83a598
+URxvt.scrollColor:          [90]#504945
+!URxvt.troughColor:          [90]#3C3836
+URxvt.highlightColor:       [90]#458588
+
+!!
+!! urxvt extensions
+!!
+
+!! extensions
+URxvt.perl-ext-common: default,tabbed,matcher,selection-to-clipboard,resize-font
+
+!! tabbed
+URxvt.tabbed.tabbar-fg: 243
+URxvt.tabbed.tabbar-bg: 237
+URxvt.tabbed.tab-fg: 250
+URxvt.tabbed.tab-bg: 30
+URxvt.tabbed.new-button: false
+URxvt.tabbed.tabcmds.1: n|SHELL|fish
+URxvt.session: n
+
+!! matcher
+URxvt.matcher.launcher: firefox
+URxvt.matcher.button: 2
+URxvt.keysym.M-u: matcher:select
+URxvt.keysym.M-U: matcher:list
+URxvt.keysym.M-o: matcher:last
+
+!! resize-font
+URxvt.resize-font.step: 2
+URxvt.keysym.C-Down: resize-font:smaller
+URxvt.keysym.C-Up: resize-font:bigger
+
+
+! Key Bindings
+! ============
+
+! Disable ISO 14755 unicode input so we can use Ctrl-Shift bindings
+URxvt.iso14755:  false
+URxvt.iso14755_52:  false
+
+! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional) 
+URxvt.keysym.C-M-c: builtin-string:
+URxvt.keysym.C-M-v: builtin-string:
+
+! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
+! I dont know why, but I needed to use hex keysym values to get it to work
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
