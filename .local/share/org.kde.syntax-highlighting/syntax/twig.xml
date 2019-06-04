@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd"
+[
+	<!ENTITY name    "[A-Za-z_:][\w.:_-]*">
+	<!ENTITY entref  "&amp;(#[0-9]+|#[xX][0-9A-Fa-f]+|&name;);">
+]>
+<language name="Twig HTML Template" version="0.2" kateversion="2.4" section="Markup" extensions="*.twig;*.htm;*.html" mimetype="text/html,text/plain"  author="Brice Maron (brice _At_ bmaron.net) ; Matthew Marshall (matthew@matthewmarshall.org)" license="LGPL" priority="9">
+
+<!--
+    Based off of the katepart html syntax highlighting by Wilbert Berendsen.
+
+    Email me with any bugs/suggestions/requests!
+-->
+
+<highlighting>
+<list name="blocktags">
+    <item>autoescape</item>
+    <item>block</item>
+    <item>do</item>
+    <item>embed</item>
+    <item>extends</item>
+    <item>filter</item>
+    <item>flush</item>
+    <item>for</item>
+    <item>from</item>
+    <item>if</item>
+    <item>import</item>
+    <item>include</item>
+    <item>macro</item>
+    <item>sandbox</item>
+    <item>set</item>
+    <item>spaceless</item>
+    <item>use</item>
+    <item>verbatim</item>
+</list>
+
+<list name="endblocktags">
+    <item>endautoescape</item>
+    <item>endblock</item>
+    <item>enddo</item>
+    <item>endembed</item>
+    <item>endextends</item>
+    <item>endfilter</item>
+    <item>endflush</item>
+    <item>endfor</item>
+    <item>endfrom</item>
+    <item>endif</item>
+    <item>endimport</item>
+    <item>endinclude</item>
+    <item>endmacro</item>
+    <item>endsandbox</item>
+    <item>endset</item>
+    <item>endspaceless</item>
+    <item>enduse</item>
+    <item>endverbatim</item>
+</list>
+
+<contexts>
+  <context name="Start" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="Mismatched Block Tag" context="#stay" String="\{%\s*end[a-z]+\s*%\}" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="FindHTML" />
+  </context>
+
+  <context name="In Block" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr context="#pop" String="\{%-*\s*end[a-z]+\s*-*%\}" lookAhead="true" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="FindHTML" />
+  </context>
+
+  <context name="FindTemplate" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="Template Comment" context="Template Comment" String="\{\#" beginRegion="templatecomment" />
+    <Detect2Chars attribute="Template Var" context="Template Var" char="{" char1="{" />
+    <Detect2Chars attribute="Template Tag" context="Template Tag" char="{" char1="%" />
+  </context>
+
+  <context name="Template Comment" attribute="Template Comment" lineEndContext="#stay">
+    <RegExpr attribute="Template Comment" context="#pop" String="\#\}" endRegion="templatecomment" />
+  </context>
+
+  <context name="Template Var" attribute="Template Var" lineEndContext="#stay">
+    <Detect2Chars attribute="Template Var" context="#pop" char="}" char1="}" />
+    <DetectChar attribute="Template Filter" context="Template Filter" char='|' />
+    <Detect2Chars attribute="Error" context="#stay" char="{" char1="{" />
+    <Detect2Chars attribute="Error" context="#stay" char="{" char1="%" />
+    <Detect2Chars attribute="Error" context="#stay" char="%" char1="}" />
+  </context>
+
+  <context name="Template Filter" attribute="Template Filter" lineEndContext="#stay">
+    <Detect2Chars attribute="Template Var" context="#pop#pop" char="}" char1="}" />
+    <DetectChar attribute="Template String" char="'" context="Single A-string"/>
+    <DetectChar attribute="Template String" char="&quot;" context="Single Q-string"/>
+    <Detect2Chars attribute="Error" context="#stay" char="{" char1="{" />
+    <Detect2Chars attribute="Error" context="#stay" char="{" char1="%" />
+    <Detect2Chars attribute="Error" context="#stay" char="%" char1="}" />
+  </context>
+
+  <context name="Template Tag" attribute="Template Tag" lineEndContext="#stay">
+      <keyword String="blocktags" context="Found Block Tag" lookAhead="true" attribute="Template Tag" beginRegion="In Block" />
+      <DetectIdentifier attribute="Template Tag" context="In Template Tag" />
+  </context>
+
+  <context name="Found Block Tag" attribute="Template Tag" lineEndContext="#stay">
+    <!-- This context is entered when a matching block tag was found through lookAhead.  We need to capture it in an re, so that it can be matched with the end[blockname] tag later -->
+    <RegExpr attribute="Template Tag" String="(&name;)" context="In Block Tag"/>
+  </context>
+
+  <context name="In Block Tag" attribute="Template Tag Argument" dynamic="true" lineEndContext="#stay" >
+    <RegExpr context="#pop#pop#pop" String="\{%-*\s*end%1\s*-*%\}" dynamic="true" attribute="Template Tag" endRegion="In Block"/>
+    <RegExpr context="Non Matching Tag" String="\{%-*\s*end[a-z]+\s*-*%\}" lookAhead="true" />
+    <Detect2Chars attribute="Template Tag" context="In Block" char="%" char1="}" />
+    <IncludeRules context="In Template Tag" />
+  </context>
+
+  <context name="Non Matching Tag" attribute="Template Tag" lineEndContext="#stay">
+    <keyword String="endblocktags" attribute="Mismatched Block Tag" context="#pop" />
+    <!-- If the mismatched tag is one we don't know about, ignore it. -->
+    <DetectIdentifier attribute="Template Tag" context="#pop" />
+  </context>
+
+  <context name="In Template Tag" attribute="Template Tag Argument" lineEndContext="#stay">
+    <Detect2Chars attribute="Template Tag" context="#pop#pop" char="%" char1="}" />
+    <DetectChar attribute="Template String" char="'" context="Single A-string"/>
+    <DetectChar attribute="Template String" char="&quot;" context="Single Q-string"/>
+    <Detect2Chars attribute="Error" context="#stay" char="{" char1="{" />
+    <Detect2Chars attribute="Error" context="#stay" char="{" char1="%" />
+    <Detect2Chars attribute="Error" context="#stay" char="}" char1="}" />
+  </context>
+
+  <context name="Single A-string" attribute="Template String" lineEndContext="#stay">
+    <HlCStringChar attribute="Template String" context="#stay"/>
+<!--       <RegExpr attribute="Operator" String="%[a-zA-Z]" context="#stay"/> -->
+    <DetectChar attribute="Template String" char="'" context="#pop"/>
+  </context>
+
+  <context name="Single Q-string" attribute="Template String" lineEndContext="#stay">
+    <HlCStringChar attribute="Template String" context="#stay"/>
+<!--       <RegExpr attribute="Operator" String="%[a-zA-Z]" context="#stay"/> -->
+    <DetectChar attribute="Template String" char="&quot;" context="#pop"/>
+  </context>
+
+
+
+  <context name="FindHTML" attribute="Normal Text" lineEndContext="#stay">
+    <DetectSpaces/>
+    <DetectIdentifier/>
+    <StringDetect attribute="Comment" context="Comment" String="&lt;!--" beginRegion="comment" />
+    <StringDetect attribute="CDATA" context="CDATA" String="&lt;![CDATA[" beginRegion="cdata" />
+    <RegExpr attribute="Doctype" context="Doctype" String="&lt;!DOCTYPE\s+" beginRegion="doctype" />
+    <RegExpr attribute="Processing Instruction" context="PI" String="&lt;\?[\w:-]*" beginRegion="pi" />
+    <RegExpr attribute="Element" context="CSS" String="&lt;style\b" insensitive="TRUE" beginRegion="style" />
+    <RegExpr attribute="Element" context="JS" String="&lt;script\b" insensitive="TRUE" beginRegion="script" />
+		<RegExpr attribute="Doctype" context="Doctype" String="&lt;!DOCTYPE\s+" insensitive="true" beginRegion="doctype"  />
+		<RegExpr attribute="Processing Instruction" context="PI" String="&lt;\?[\w:-]*" beginRegion="pi" />
+		<RegExpr attribute="Element" context="CSS" String="&lt;style\b" insensitive="true" beginRegion="style" />
+		<RegExpr attribute="Element" context="JS" String="&lt;script\b" insensitive="true" beginRegion="script" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;head\b" insensitive="true" beginRegion="head" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;title\b" insensitive="true" beginRegion="title" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;base\b" insensitive="true" beginRegion="base" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;link\b" insensitive="true" beginRegion="link" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;meta\b" insensitive="true" beginRegion="meta" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;noscript\b" insensitive="true" beginRegion="noscript" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;body\b" insensitive="true" beginRegion="body" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;section\b" insensitive="true" beginRegion="section" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;nav\b" insensitive="true" beginRegion="nav" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;article\b" insensitive="true" beginRegion="article" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;aside\b" insensitive="true" beginRegion="aside" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;h1\b" insensitive="true" beginRegion="h1" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;h2\b" insensitive="true" beginRegion="h2" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;h3\b" insensitive="true" beginRegion="h3" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;h4\b" insensitive="true" beginRegion="h4" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;h5\b" insensitive="true" beginRegion="h5" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;h6\b" insensitive="true" beginRegion="h6" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;hgroup\b" insensitive="true" beginRegion="hgroup" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;header\b" insensitive="true" beginRegion="header" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;footer\b" insensitive="true" beginRegion="footer" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;address\b" insensitive="true" beginRegion="address" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;p\b" insensitive="true" beginRegion="p" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;hr\b" insensitive="true" beginRegion="hr" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;pre\b" insensitive="true" beginRegion="pre" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;blockquote\b" insensitive="true" beginRegion="blockquote" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;ol\b" insensitive="true" beginRegion="ol" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;ul\b" insensitive="true" beginRegion="ul" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;li\b" insensitive="true" beginRegion="li" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;dl\b" insensitive="true" beginRegion="dl" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;dt\b" insensitive="true" beginRegion="dt" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;dd\b" insensitive="true" beginRegion="dd" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;figure\b" insensitive="true" beginRegion="figure" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;figcaption\b" insensitive="true" beginRegion="figcaption" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;div\b" insensitive="true" beginRegion="div" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;a\b" insensitive="true" beginRegion="a" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;em\b" insensitive="true" beginRegion="em" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;strong\b" insensitive="true" beginRegion="strong" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;small\b" insensitive="true" beginRegion="small" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;s\b" insensitive="true" beginRegion="s" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;cite\b" insensitive="true" beginRegion="cite" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;q\b" insensitive="true" beginRegion="q" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;dfn\b" insensitive="true" beginRegion="dfn" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;abbr\b" insensitive="true" beginRegion="abbr" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;data\b" insensitive="true" beginRegion="data" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;time\b" insensitive="true" beginRegion="time" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;code\b" insensitive="true" beginRegion="code" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;var\b" insensitive="true" beginRegion="var" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;samp\b" insensitive="true" beginRegion="samp" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;kbd\b" insensitive="true" beginRegion="kbd" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;sub\b" insensitive="true" beginRegion="sub" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;sup\b" insensitive="true" beginRegion="sup" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;i\b" insensitive="true" beginRegion="i" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;b\b" insensitive="true" beginRegion="b" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;u\b" insensitive="true" beginRegion="u" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;mark\b" insensitive="true" beginRegion="mark" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;ruby\b" insensitive="true" beginRegion="ruby" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;rt\b" insensitive="true" beginRegion="rt" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;rp\b" insensitive="true" beginRegion="rp" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;bdi\b" insensitive="true" beginRegion="bdi" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;bdo\b" insensitive="true" beginRegion="bdo" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;span\b" insensitive="true" beginRegion="span" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;br\b" insensitive="true" beginRegion="br" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;wbr\b" insensitive="true" beginRegion="wbr" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;ins\b" insensitive="true" beginRegion="ins" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;del\b" insensitive="true" beginRegion="del" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;img\b" insensitive="true" beginRegion="img" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;iframe\b" insensitive="true" beginRegion="iframe" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;object\b" insensitive="true" beginRegion="object" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;param\b" insensitive="true" beginRegion="param" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;video\b" insensitive="true" beginRegion="video" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;audio\b" insensitive="true" beginRegion="audio" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;source\b" insensitive="true" beginRegion="source" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;track\b" insensitive="true" beginRegion="track" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;canvas\b" insensitive="true" beginRegion="canvas" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;map\b" insensitive="true" beginRegion="map" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;area\b" insensitive="true" beginRegion="area" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;svg\b" insensitive="true" beginRegion="svg" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;math\b" insensitive="true" beginRegion="math" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;table\b" insensitive="true" beginRegion="table" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;caption\b" insensitive="true" beginRegion="caption" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;colgroup\b" insensitive="true" beginRegion="colgroup" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;col\b" insensitive="true" beginRegion="col" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;tbody\b" insensitive="true" beginRegion="tbody" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;thead\b" insensitive="true" beginRegion="thead" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;tfoot\b" insensitive="true" beginRegion="tfoot" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;tr\b" insensitive="true" beginRegion="tr" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;td\b" insensitive="true" beginRegion="td" />
+		<RegExpr attribute="Element" context="El Open" String="&lt;th\b" insensitive="true" beginRegion="th" />
+
+		<RegExpr attribute="Element" context="El Open" String="&lt;&name;" />
+
+		<RegExpr attribute="Element" context="El Close" String="&lt;head\b" insensitive="true" endRegion="head" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;title\b" insensitive="true" endRegion="title" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;base\b" insensitive="true" endRegion="base" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;link\b" insensitive="true" endRegion="link" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;meta\b" insensitive="true" endRegion="meta" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;style\b" insensitive="true" endRegion="style" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;script\b" insensitive="true" endRegion="script" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;noscript\b" insensitive="true" endRegion="noscript" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;body\b" insensitive="true" endRegion="body" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;section\b" insensitive="true" endRegion="section" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;nav\b" insensitive="true" endRegion="nav" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;article\b" insensitive="true" endRegion="article" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;aside\b" insensitive="true" endRegion="aside" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;h1\b" insensitive="true" endRegion="h1" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;h2\b" insensitive="true" endRegion="h2" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;h3\b" insensitive="true" endRegion="h3" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;h4\b" insensitive="true" endRegion="h4" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;h5\b" insensitive="true" endRegion="h5" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;h6\b" insensitive="true" endRegion="h6" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;hgroup\b" insensitive="true" endRegion="hgroup" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;header\b" insensitive="true" endRegion="header" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;footer\b" insensitive="true" endRegion="footer" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;address\b" insensitive="true" endRegion="address" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;p\b" insensitive="true" endRegion="p" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;hr\b" insensitive="true" endRegion="hr" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;pre\b" insensitive="true" endRegion="pre" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;blockquote\b" insensitive="true" endRegion="blockquote" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;ol\b" insensitive="true" endRegion="ol" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;ul\b" insensitive="true" endRegion="ul" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;li\b" insensitive="true" endRegion="li" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;dl\b" insensitive="true" endRegion="dl" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;dt\b" insensitive="true" endRegion="dt" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;dd\b" insensitive="true" endRegion="dd" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;figure\b" insensitive="true" endRegion="figure" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;figcaption\b" insensitive="true" endRegion="figcaption" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;div\b" insensitive="true" endRegion="div" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;a\b" insensitive="true" endRegion="a" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;em\b" insensitive="true" endRegion="em" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;strong\b" insensitive="true" endRegion="strong" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;small\b" insensitive="true" endRegion="small" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;s\b" insensitive="true" endRegion="s" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;cite\b" insensitive="true" endRegion="cite" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;q\b" insensitive="true" endRegion="q" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;dfn\b" insensitive="true" endRegion="dfn" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;abbr\b" insensitive="true" endRegion="abbr" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;data\b" insensitive="true" endRegion="data" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;time\b" insensitive="true" endRegion="time" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;code\b" insensitive="true" endRegion="code" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;var\b" insensitive="true" endRegion="var" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;samp\b" insensitive="true" endRegion="samp" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;kbd\b" insensitive="true" endRegion="kbd" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;sub\b" insensitive="true" endRegion="sub" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;sup\b" insensitive="true" endRegion="sup" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;i\b" insensitive="true" endRegion="i" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;b\b" insensitive="true" endRegion="b" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;u\b" insensitive="true" endRegion="u" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;mark\b" insensitive="true" endRegion="mark" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;ruby\b" insensitive="true" endRegion="ruby" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;rt\b" insensitive="true" endRegion="rt" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;rp\b" insensitive="true" endRegion="rp" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;bdi\b" insensitive="true" endRegion="bdi" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;bdo\b" insensitive="true" endRegion="bdo" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;span\b" insensitive="true" endRegion="span" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;br\b" insensitive="true" endRegion="br" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;wbr\b" insensitive="true" endRegion="wbr" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;ins\b" insensitive="true" endRegion="ins" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;del\b" insensitive="true" endRegion="del" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;img\b" insensitive="true" endRegion="img" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;iframe\b" insensitive="true" endRegion="iframe" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;object\b" insensitive="true" endRegion="object" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;param\b" insensitive="true" endRegion="param" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;video\b" insensitive="true" endRegion="video" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;audio\b" insensitive="true" endRegion="audio" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;source\b" insensitive="true" endRegion="source" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;track\b" insensitive="true" endRegion="track" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;canvas\b" insensitive="true" endRegion="canvas" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;map\b" insensitive="true" endRegion="map" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;area\b" insensitive="true" endRegion="area" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;svg\b" insensitive="true" endRegion="svg" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;math\b" insensitive="true" endRegion="math" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;table\b" insensitive="true" endRegion="table" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;caption\b" insensitive="true" endRegion="caption" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;colgroup\b" insensitive="true" endRegion="colgroup" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;col\b" insensitive="true" endRegion="col" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;tbody\b" insensitive="true" endRegion="tbody" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;thead\b" insensitive="true" endRegion="thead" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;tfoot\b" insensitive="true" endRegion="tfoot" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;tr\b" insensitive="true" endRegion="tr" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;td\b" insensitive="true" endRegion="td" />
+		<RegExpr attribute="Element" context="El Close" String="&lt;th\b" insensitive="true" endRegion="th" />
+
+		<RegExpr attribute="Element" context="El Close" String="&lt;/&name;" />
+    <!-- as long as kde gives DTDs the text/html mimetype--><IncludeRules context="FindDTDRules" />
+    <IncludeRules context="FindEntityRefs" />
+  </context>
+
+  <context name="FindEntityRefs" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="EntityRef" context="#stay" String="&entref;" />
+    <AnyChar attribute="Error" context="#stay" String="&amp;&lt;" />
+  </context>
+
+  <context name="FindPEntityRefs" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="EntityRef" context="#stay" String="&entref;" />
+    <RegExpr attribute="PEntityRef" context="#stay" String="%&name;;" />
+    <AnyChar attribute="Error" context="#stay" String="&amp;%" />
+  </context>
+
+  <context name="FindAttributes" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="Attribute" context="#stay" String="&name;" column="0"/>
+    <RegExpr attribute="Attribute" context="#stay" String="\s+&name;" />
+    <DetectChar attribute="Attribute" context="Value" char="=" />
+  </context>
+
+  <context name="FindDTDRules" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="Doctype" context="Doctype Markupdecl" String="&lt;!(ELEMENT|ENTITY|ATTLIST|NOTATION)\b" />
+  </context>
+
+
+  <context name="Comment" attribute="Comment" lineEndContext="#stay">
+    <DetectSpaces/>
+    <IncludeRules context="##Alerts" />
+    <IncludeRules context="FindTemplate" />
+    <DetectIdentifier/>
+    <StringDetect attribute="Comment" context="#pop" String="--&gt;" endRegion="comment" />
+    <RegExpr attribute="Error" context="#stay" String="-(-(?!-&gt;))+" />
+  </context>
+
+  <context name="CDATA" attribute="Normal Text" lineEndContext="#stay">
+    <DetectSpaces/>
+    <DetectIdentifier/>
+    <StringDetect attribute="CDATA" context="#pop" String="]]&gt;" endRegion="cdata" />
+    <StringDetect attribute="EntityRef" context="#stay" String="]]&amp;gt;" />
+  </context>
+
+  <context name="PI" attribute="Normal Text" lineEndContext="#stay">
+    <Detect2Chars attribute="Processing Instruction" context="#pop" char="?" char1="&gt;" endRegion="pi" />
+  </context>
+
+  <context name="Doctype" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Doctype" context="#pop" char="&gt;" endRegion="doctype" />
+    <DetectChar attribute="Doctype" context="Doctype Internal Subset" char="[" beginRegion="int_subset" />
+  </context>
+
+  <context name="Doctype Internal Subset" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Doctype" context="#pop" char="]" endRegion="int_subset" />
+    <IncludeRules context="FindDTDRules" />
+    <StringDetect attribute="Comment" context="Comment" String="&lt;!--" beginRegion="comment" />
+    <RegExpr attribute="Processing Instruction" context="PI" String="&lt;\?[\w:-]*" beginRegion="pi" />
+    <IncludeRules context="FindPEntityRefs" />
+  </context>
+
+  <context name="Doctype Markupdecl" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Doctype" context="#pop" char="&gt;" />
+    <DetectChar attribute="Value" context="Doctype Markupdecl DQ" char="&quot;" />
+    <DetectChar attribute="Value" context="Doctype Markupdecl SQ" char="&apos;" />
+  </context>
+
+  <context name="Doctype Markupdecl DQ" attribute="Value" lineEndContext="#stay">
+    <DetectChar attribute="Value" context="#pop" char="&quot;" />
+    <IncludeRules context="FindPEntityRefs" />
+  </context>
+
+  <context name="Doctype Markupdecl SQ" attribute="Value" lineEndContext="#stay">
+    <DetectChar attribute="Value" context="#pop" char="&apos;" />
+    <IncludeRules context="FindPEntityRefs" />
+  </context>
+
+  <context name="El Open" attribute="Normal Text" lineEndContext="#stay">
+    <Detect2Chars attribute="Element" context="#pop" char="/" char1="&gt;" />
+    <DetectChar attribute="Element" context="#pop" char="&gt;" />
+    <IncludeRules context="FindAttributes" />
+    <IncludeRules context="FindTemplate" />
+    <RegExpr attribute="Error" context="#stay" String="\S" />
+  </context>
+
+  <context name="El Close" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Element" context="#pop" char="&gt;" />
+    <RegExpr attribute="Error" context="#stay" String="\S" />
+  </context>
+
+  <context name="El Close 2" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Element" context="#pop#pop#pop" char="&gt;" />
+    <RegExpr attribute="Error" context="#stay" String="\S" />
+  </context>
+
+  <context name="El Close 3" attribute="Normal Text" lineEndContext="#stay">
+    <DetectChar attribute="Element" context="#pop#pop#pop#pop" char="&gt;" />
+    <RegExpr attribute="Error" context="#stay" String="\S" />
+  </context>
+
+  <context name="CSS" attribute="Normal Text" lineEndContext="#stay">
+    <Detect2Chars attribute="Element" context="#pop" char="/" char1="&gt;" endRegion="style" />
+    <DetectChar attribute="Element" context="CSS content" char="&gt;" />
+    <IncludeRules context="FindAttributes" />
+    <IncludeRules context="FindTemplate" />
+    <RegExpr attribute="Error" context="#stay" String="\S" />
+  </context>
+
+  <context name="CSS content" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="Element" context="El Close 2" String="&lt;/style\b" insensitive="TRUE" endRegion="style" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="##CSS" includeAttrib="true"/>
+  </context>
+
+  <context name="JS" attribute="Normal Text" lineEndContext="#stay">
+    <Detect2Chars attribute="Element" context="#pop" char="/" char1="&gt;" endRegion="script" />
+    <DetectChar attribute="Element" context="JS content" char="&gt;" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="FindAttributes" />
+    <RegExpr attribute="Error" context="#stay" String="\S" />
+  </context>
+
+  <context name="JS content" attribute="Normal Text" lineEndContext="#stay">
+    <RegExpr attribute="Element" context="El Close 2" String="&lt;/script\b" insensitive="TRUE" endRegion="script" />
+    <RegExpr attribute="Comment" context="JS comment close" String="//(?=.*&lt;/script\b)" insensitive="TRUE" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="##JavaScript" includeAttrib="true"/>
+  </context>
+
+  <context name="JS comment close" attribute="Comment" lineEndContext="#pop">
+    <RegExpr attribute="Element" context="El Close 3" String="&lt;/script\b" insensitive="TRUE" endRegion="script" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="##Alerts" />
+  </context>
+
+  <context name="Value" attribute="Normal Text" lineEndContext="#stay" fallthrough="true" fallthroughContext="Value NQ">
+    <DetectChar attribute="Value" context="Value DQ" char="&quot;" />
+    <DetectChar attribute="Value" context="Value SQ" char="&apos;" />
+    <DetectSpaces />
+  </context>
+
+  <context name="Value NQ" attribute="Normal Text" lineEndContext="#pop#pop" fallthrough="true" fallthroughContext="#pop#pop">
+    <IncludeRules context="FindEntityRefs" />
+    <IncludeRules context="FindTemplate" />
+    <RegExpr attribute="Value" context="#stay" String="/(?!&gt;)" />
+    <RegExpr attribute="Value" context="#stay" String="[^/&gt;&lt;&quot;&apos;\s]" />
+  </context>
+
+  <context name="Value DQ" attribute="Value" lineEndContext="#stay">
+    <DetectChar attribute="Value" context="#pop#pop" char="&quot;" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="FindEntityRefs" />
+  </context>
+
+  <context name="Value SQ" attribute="Value" lineEndContext="#stay">
+    <DetectChar attribute="Value" context="#pop#pop" char="&apos;" />
+    <IncludeRules context="FindTemplate" />
+    <IncludeRules context="FindEntityRefs" />
+  </context>
+
+</contexts>
+<itemDatas>
+  <itemData name="Normal Text" defStyleNum="dsNormal" />
+  <itemData name="Comment" defStyleNum="dsComment" />
+  <itemData name="CDATA" defStyleNum="dsBaseN" bold="1" />
+  <itemData name="Processing Instruction" defStyleNum="dsKeyword" />
+  <itemData name="Doctype" defStyleNum="dsDataType" bold="1" />
+  <itemData name="Element" defStyleNum="dsKeyword" />
+  <itemData name="Attribute" defStyleNum="dsOthers" />
+  <itemData name="Value" defStyleNum="dsString" color="#a00" />
+  <itemData name="EntityRef" defStyleNum="dsDecVal" />
+  <itemData name="PEntityRef" defStyleNum="dsDecVal" />
+  <itemData name="Error" defStyleNum="dsError" />
+  <itemData name="Template Var" defStyleNum="dsFunction" />
+  <itemData name="Template Tag" defStyleNum="dsOthers" bold="1" />
+  <itemData name="Template Tag Argument" defStyleNum="dsFunction" />
+  <itemData name="Template String" defStyleNum="dsString" />
+  <itemData name="Template Comment" defStyleNum="dsComment" />
+  <itemData name="Template Filter" defStyleNum="dsFunction" />
+  <itemData name="Mismatched Block Tag" defStyleNum="dsError" />
+</itemDatas>
+
+</highlighting>
+<general>
+  <comments>
+      <comment name="multiLine" start="{#" end="#}" region="templatecomment" />
+  </comments>
+</general>
+</language>

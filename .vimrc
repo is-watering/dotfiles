@@ -1,8 +1,10 @@
 filetype plugin indent off
 
 set all& " init all settings
-scriptencoding utf-8 "set script encoding
-set guifont=Cica:h16
+set encoding=utf-8
+set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileformats=unix,dos,mac
+set guifont=Cica:h14
 set printfont=Cica:h14
 set ambiwidth=single
 set number "行番号を表示
@@ -18,14 +20,21 @@ autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
 let mapleader = "\<Space>"
 
 set clipboard=unnamed
-nnoremap ,y "+y<CR>
-vnoremap ,y "+y<CR>
-nnoremap ,p "+p<CR>
-vnoremap ,p "+p<CR>
+nnoremap ,y "+y
+vnoremap ,y "+y
+nnoremap ,Y "+Y
+vnoremap ,Y "+Y
+nnoremap ,p "+p
+vnoremap ,p "+p
+nnoremap ,P "+P
+vnoremap ,P "+P
 
 " ノーマルモード時だけ ; と : を入れ替える
 nnoremap ; :
 nnoremap : ;
+
+" ノーマルモードでEnter押すと改行
+nnoremap <CR> i<CR><ESC>
 
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する
@@ -55,20 +64,21 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('rhysd/vim-healthcheck')
   call dein#add('roxma/nvim-yarp')
   call dein#add('roxma/vim-hug-neovim-rpc')
-
+  
   call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('$HOME/.cache/dein/repos/github.com/Shougo/dein.vim')
     nnoremap <silent> <Leader>h :History<CR>
-
+  
   call dein#add('Shougo/deoplete.nvim')
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#auto_complete_delay = 0
     let g:deoplete#auto_complete_start_length = 1
-
+  
   " Add or remove your plugins here like this:
   "call dein#add('Shougo/neosnippet.vim')
   "call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('editorconfig/editorconfig-vim')
+  call dein#add('editorconfig/editorconfig-vim')  
   call dein#add('sheerun/vim-polyglot')
 
   "call dein#add('scrooloose/nerdtree')
@@ -77,13 +87,13 @@ if dein#load_state('$HOME/.cache/dein')
     "let g:NERDTreeQuitOnOpen=1
     " NERDTreeを同時に閉じる
     "autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
-
+    
   call dein#add('cocopon/vaffle.vim')
     let g:vaffle_auto_cd = 1
 
   call dein#add('hisaknown/nanomap.vim')
   "call dein#add('severin-lemaignan/vim-minimap')
-
+  
   call dein#add('nathanaelkane/vim-indent-guides')
     let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_auto_colors = 0
@@ -109,7 +119,7 @@ if dein#load_state('$HOME/.cache/dein')
     \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
     \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
     \ }
-
+    
     function! LightLineFugitive()
       try
         if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
@@ -121,9 +131,9 @@ if dein#load_state('$HOME/.cache/dein')
       endtry
       return ''
     endfunction
-
+  
   call dein#add('tpope/vim-fugitive')
-
+  
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-repeat')
 

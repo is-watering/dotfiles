@@ -1,8 +1,10 @@
 filetype plugin indent off
 
 set all& " init all settings
-scriptencoding utf-8 "set script encoding
-set guifont=Cica:h16
+set encoding=utf-8
+set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileformats=unix,dos,mac
+set guifont=Cica:h14
 set printfont=Cica:h14
 set ambiwidth=single
 set number "行番号を表示
@@ -10,6 +12,8 @@ set autoindent "改行時に自動でインデントする
 set wrap "自動折り返しを有効
 set cursorline "カーソルラインを有効
 set mouse=a
+set ignorecase "検索時に大文字小文字を無視
+set smartcase
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
 
@@ -18,14 +22,21 @@ autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
 let mapleader = "\<Space>"
 
 set clipboard=unnamed
-nnoremap ,y "+y<CR>
-vnoremap ,y "+y<CR>
-nnoremap ,p "+p<CR>
-vnoremap ,p "+p<CR>
+nnoremap ,y "+y
+vnoremap ,y "+y
+nnoremap ,Y "+Y
+vnoremap ,Y "+Y
+nnoremap ,p "+p
+vnoremap ,p "+p
+nnoremap ,P "+P
+vnoremap ,P "+P
 
 " ノーマルモード時だけ ; と : を入れ替える
 nnoremap ; :
 nnoremap : ;
+
+" ノーマルモードでEnter押すと改行
+nnoremap <CR> i<CR><ESC>
 
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する
