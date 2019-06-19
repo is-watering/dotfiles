@@ -18,6 +18,15 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'haya14busa/is.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+hook_add = '''
+  nnoremap <silent> ,m :OverCommandLine<CR>
+'''
+
+[[plugins]]
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
@@ -73,7 +82,7 @@ hook_add = '''
       \ 'winwidth': 28,
       \ })
             
-  nnoremap <silent><C-e> :Defx -auto-cd -resume `expand('%:p:h')`<CR>
+  nnoremap <silent><C-e> :Defx -auto-cd -resume -columns=icons:filename:type `expand('%:p:h')`<CR>
   
   autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
@@ -143,6 +152,13 @@ hook_add = '''
     \ defx#do_action('change_vim_cwd')
   endfunction
 '''
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+depends = ['defx.nvim']
+# hook_add = '''
+#   let g:defx_icons_enable_syntax_highlight = 0
+# '''
 
 # [[plugins]]
 # repo = 'cocopon/vaffle.vim'
