@@ -10,6 +10,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+depends = ['neosnippet.vim', 'context_filetype.vim']
 on_event = 'InsertEnter'
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
@@ -39,12 +40,12 @@ hook_add = '''
 repo = 'Shougo/denite.nvim'
 hook_add = '''
   call denite#custom#option('default', {
-      \ 'direction': 'botright',
-      \ 'split': 'horizontal',
-      \ 'winheight': 8,
-      \ 'winwidth': 20,
+      \   'direction': 'botright',
+      \   'split': 'horizontal',
+      \   'winheight': 8,
+      \   'winwidth': 20,
       \ })
-    
+
   autocmd FileType denite call s:denite_my_settings()
   function! s:denite_my_settings() abort
     nnoremap <silent><buffer><expr> <CR>
@@ -62,23 +63,21 @@ hook_add = '''
     nnoremap <silent><buffer><expr> <Space>
     \ denite#do_map('toggle_select').'j'
   endfunction
-    
+
   nnoremap <silent> <Leader>b :<C-u>Denite buffer<CR>
   nnoremap <silent> <Leader>r :<C-u>Denite register<CR>
 '''
 
 [[plugins]]
 repo = 'junegunn/fzf'
+depends = ['fzf.vim']
 build = './install --all'
 merged = 0
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
-depends = 'fzf'
 hook_add = '''
   nnoremap <silent> <Leader>h :History<CR>
-  nnoremap <silent> <Leader>h :History<CR>
-  
   tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
 '''
 
@@ -90,21 +89,28 @@ repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
+depends = ['defx-icons']
 hook_add = '''
   if !has('nvim')
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
   endif
-  
+
   call defx#custom#option('_', {
-      \ 'direction': 'topleft',
-      \ 'toggle': 1,
-      \ 'split': 'vertical',
-      \ 'winwidth': 28,
+      \   'columns': 'indent:mark:icons:filename:type',
+      \   'direction': 'topleft',
+      \   'toggle': 1,
+      \   'show_ignored_files': 1,
+      \   'split': 'vertical',
+      \   'winwidth': 28,
       \ })
-            
-  nnoremap <silent><C-e> :Defx -auto-cd -resume -columns=icons:filename:type `expand('%:p:h')`<CR>
-  
+
+  call defx#custom#column('indent', {
+      \   'indent': '  ',
+      \ })
+
+  nnoremap <silent><C-e> :Defx -auto-cd -resume `expand('%:p:h')`<CR>
+
   autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
     " Define mappings
@@ -178,16 +184,15 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kristijanhusak/defx-icons'
-depends = ['defx.nvim']
-# hook_add = '''
-#   let g:defx_icons_enable_syntax_highlight = 0
-# '''
+hook_add = '''
+  let g:defx_icons_enable_syntax_highlight = 0
+'''
 
 # [[plugins]]
 # repo = 'cocopon/vaffle.vim'
 # hook_add = '''
 #   nnoremap <silent><C-e> :Vaffle<CR>
-#   
+#
 #   let g:vaffle_auto_cd = 1
 # '''
 
@@ -205,7 +210,7 @@ depends = ['defx.nvim']
 [[plugins]]
 repo = 'skanehira/vsession'
 hook_add = '''
-  nnoremap <Leader>se :SaveSession 
+  nnoremap <Leader>se :SaveSession
   nnoremap <Leader>lse :FloadSession<CR>
 '''
 
@@ -229,27 +234,28 @@ hook_add = '''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+depends = ['vim-fugitive']
 hook_add = '''
   let g:lightline = {
-    \ 'colorscheme': 'powerline',
-    \ 'active': {
+    \   'colorscheme': 'powerline',
+    \   'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+    \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
     \   'right': [ [ 'lineinfo' ],
-    \              [ 'percent' ],
-    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-    \  },
-    \ 'component_function': {
-    \   'gitbranch': 'LightLineFugitive'
-    \  },
-    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
-    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
+    \            [ 'percent' ],
+    \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \   },
+    \   'component_function': {
+    \     'gitbranch': 'LightLineFugitive'
+    \   },
+    \   'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+    \   'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
     \ }
-    
+
   function! LightLineFugitive()
     try
       if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-        let mark = ' '  " edit here for cool mark
+        let mark = "\ue725 "  " edit here for cool mark
         let _ = fugitive#head()
         return strlen(_) ? mark._ : ''
       endif
@@ -261,15 +267,14 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-depends = ['lightline.vim']
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
   let g:user_emmet_mode = 'iv'
   let g:user_emmet_settings = {
-    \ 'variables' : {
-    \   'lang' : 'ja'
+    \   'variables' : {
+    \     'lang' : 'ja'
     \   }
     \ }
   imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
@@ -278,28 +283,25 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
 on_event = 'InsertEnter'
-depends = ['deoplete.nvim']
+depends = ['neosnippet-snippets']
 hook_add = '''
   let g:neosnippet#enable_snipmate_compatibility = 1
   let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
   let g:neosnippet#scope_aliases = {}
   let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
-  
+
   imap <C-k> <Plug>(neosnippet_expand_or_jump)
   smap <C-k> <Plug>(neosnippet_expand_or_jump)
 '''
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-depends = ['neosnippet.vim']
 
 # [[plugins]]
 # repo = 'honza/vim-snippets'
-# depends = ['neosnippet.vim']
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
-depends = ['deoplete.nvim']
 hook_add = '''
   if !exists('g:context_filetype#same_filetypes')
     let g:context_filetype#same_filetypes = {}
@@ -323,12 +325,12 @@ hook_add = '''
 repo = 'Valloric/MatchTagAlways'
 hook_add = '''
   let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'html.twig' : 1,
-    \}
+    \   'html' : 1,
+    \   'xhtml' : 1,
+    \   'xml' : 1,
+    \   'jinja' : 1,
+    \   'html.twig' : 1,
+    \ }
 '''
 
 

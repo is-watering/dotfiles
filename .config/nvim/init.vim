@@ -14,6 +14,7 @@ set cursorline "カーソルラインを有効
 set mouse=a
 set ignorecase "検索時に大文字小文字を無視
 set smartcase
+set hidden "
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
 
@@ -62,11 +63,11 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#begin('$HOME/.cache/dein')
 
 " Let dein manage dein
-let s:toml_dir  = $HOME . '/.config/nvim/' 
+let s:toml_dir  = $HOME . '/.config/nvim/'
 let s:toml      = s:toml_dir . '/dein.toml'
 
   " Required:
-  
+
   " Add or remove your plugins here like this:
   call dein#load_toml(s:toml,      {'lazy': 0})
   "call dein#add('Shougo/neosnippet.vim')

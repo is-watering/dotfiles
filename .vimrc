@@ -12,6 +12,9 @@ set autoindent "改行時に自動でインデントする
 set wrap "自動折り返しを有効
 set cursorline "カーソルラインを有効
 set mouse=a
+set ignorecase "検索時に大文字小文字を無視
+set smartcase
+set hidden "
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
 
@@ -65,10 +68,11 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('roxma/nvim-yarp')
   call dein#add('roxma/vim-hug-neovim-rpc')
   
-  call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
-  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+  call dein#add('junegunn/fzf.vim')
   call dein#add('$HOME/.cache/dein/repos/github.com/Shougo/dein.vim')
     nnoremap <silent> <Leader>h :History<CR>
+    tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
   
   call dein#add('Shougo/deoplete.nvim')
     let g:deoplete#enable_at_startup = 1
@@ -81,12 +85,12 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('editorconfig/editorconfig-vim')  
   call dein#add('sheerun/vim-polyglot')
 
-  "call dein#add('scrooloose/nerdtree')
-    "nnoremap <silent><C-e> :NERDTreeToggle<CR>
+  call dein#add('scrooloose/nerdtree')
+    nnoremap <silent><C-e> :NERDTreeToggle<CR>
     " ファイルを開いたらNERDTreeを閉じる
-    "let g:NERDTreeQuitOnOpen=1
+    let g:NERDTreeQuitOnOpen=1
     " NERDTreeを同時に閉じる
-    "autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+    autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
     
   call dein#add('cocopon/vaffle.vim')
     let g:vaffle_auto_cd = 1
@@ -105,25 +109,25 @@ if dein#load_state('$HOME/.cache/dein')
 
   call dein#add('itchyny/lightline.vim')
     let g:lightline = {
-    \ 'colorscheme': 'powerline',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \              [ 'percent' ],
-    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-    \  },
-    \ 'component_function': {
-    \   'gitbranch': 'LightLineFugitive'
-    \  },
-    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
-    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
-    \ }
-    
+      \   'colorscheme': 'powerline',
+      \   'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \            [ 'percent' ],
+      \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \   },
+      \   'component_function': {
+      \     'gitbranch': 'LightLineFugitive'
+      \   },
+      \   'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+      \   'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
+      \ }
+
     function! LightLineFugitive()
       try
         if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-          let mark = ' '  " edit here for cool mark
+          let mark = "\ue725 "  " edit here for cool mark
           let _ = fugitive#head()
           return strlen(_) ? mark._ : ''
         endif
@@ -152,7 +156,7 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#save_state()
 endif
 
-  colorscheme twilight256
+colorscheme twilight256
 
 " Required:
 filetype plugin indent on
