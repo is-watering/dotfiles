@@ -14,11 +14,10 @@ set cursorline "カーソルラインを有効
 set mouse=a
 set ignorecase "検索時に大文字小文字を無視
 set smartcase
+set virtualedit=onemore "行末の1文字先までカーソルを移動できるように
 set hidden "
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
-
-autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
 
 let mapleader = "\<Space>"
 
@@ -38,6 +37,8 @@ nnoremap : ;
 
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
+
+autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
 
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する
@@ -90,3 +91,12 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+
+""""""""""""""""""""""""""""""
+" color overrides
+""""""""""""""""""""""""""""""
+
+hi Pmenu ctermbg=31
+hi PmenuSel ctermbg=43 ctermfg=20
+hi PmenuSbar ctermbg=249
+hi PmenuThumb ctermfg=240
