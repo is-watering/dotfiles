@@ -333,6 +333,8 @@ hook_add = '''
     \ }
 '''
 
+[[plugins]]
+repo = 'delphinus/vim-auto-cursorline'
 
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'

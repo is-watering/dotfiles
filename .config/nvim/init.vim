@@ -2,7 +2,7 @@ filetype plugin indent off
 
 set all& " init all settings
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set guifont=Cica:h14
 set printfont=Cica:h14
@@ -10,12 +10,14 @@ set ambiwidth=single
 set number "行番号を表示
 set autoindent "改行時に自動でインデントする
 set wrap "自動折り返しを有効
-set cursorline "カーソルラインを有効
+"set cursorline "カーソルラインを有効
 set mouse=a
 set ignorecase "検索時に大文字小文字を無視
 set smartcase
 set virtualedit=onemore "行末の1文字先までカーソルを移動できるように
-set hidden "
+set autoread "外部でファイルに変更があったときに自動で読み直す
+au CursorHold * :checktime
+set hidden "ファイルを保存しなくても別のファイルを開けるように
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
 
