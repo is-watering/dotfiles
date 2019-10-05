@@ -68,11 +68,13 @@ if dein#load_state('$HOME/.cache/dein')
 " Let dein manage dein
 let s:toml_dir  = $HOME . '/.config/nvim/'
 let s:toml      = s:toml_dir . '/dein.toml'
+let s:lazy_toml = s:toml_dir . '/dein_lazy.toml'
 
   " Required:
 
   " Add or remove your plugins here like this:
   call dein#load_toml(s:toml,      {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
   "call dein#add('Shougo/neosnippet.vim')
   "call dein#add('Shougo/neosnippet-snippets')
 
@@ -102,3 +104,9 @@ hi Pmenu ctermbg=31
 hi PmenuSel ctermbg=43 ctermfg=20
 hi PmenuSbar ctermbg=249
 hi PmenuThumb ctermfg=240
+" highlight ALEErrorSign cterm=bold ctermfg=1 ctermbg=234
+" highlight ALEWarningSign cterm=bold ctermfg=11 ctermbg=234
+" highlight ALEError cterm=NONE ctermfg=0 ctermbg=1
+" highlight ALEWarning cterm=NONE ctermfg=0 ctermbg=11
+
+

@@ -1,0 +1,183 @@
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+on_map = '<Leader>P'
+hook_source = '''
+  nnoremap <silent> <Leader>P :<C-u>Deol -command='fish' -split='horizontal'<CR>
+  tnoremap <ESC> <C-\><C-n>
+'''
+
+[[plugins]]
+repo = 'haya14busa/is.vim'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'alvan/vim-closetag'
+on_event = 'InsertEnter'
+hook_source = '''
+  let g:closetag_filetypes = 'html,jinja'
+'''
+
+# [[plugins]]
+# repo = 'prettier/vim-prettier'
+# build = 'npm install'
+# on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+# hook_source = '''
+#   " @formatアノテーションを持ったファイルの自動フォーマットを無効にする
+#   let g:prettier#autoformat = 0
+
+#   " Prettierのパースエラーをquickfixに表示しない
+#   let g:prettier#quickfix_enabled = 0
+
+#   autocmd BufWritePre *.js,*.ts,*.vue,*.css,*.scss,*.json,*.md PrettierAsync
+# '''
+
+[[plugins]]
+repo = 'dense-analysis/ale'
+on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+hook_add = '''
+  autocmd VimEnter,Colorscheme * :hi ALEErrorSign cterm=bold ctermfg=1 ctermbg=234
+  autocmd VimEnter,Colorscheme * :hi ALEWarningSign cterm=bold ctermfg=11 ctermbg=234
+  autocmd VimEnter,Colorscheme * :hi ALEError cterm=NONE ctermfg=0 ctermbg=1
+  autocmd VimEnter,Colorscheme * :hi ALEWarning cterm=NONE ctermfg=0 ctermbg=11
+'''
+hook_source = '''
+  let g:ale_linters = {
+    \ 'css': ['stylelint'],
+    \ 'scss': ['stylelint'],
+  \ }
+  let g:ale_fixers = {
+    \ 'css': ['stylelint'],
+    \ 'scss': ['stylelint'],
+  \ }
+  let g:ale_lint_on_text_changed = 1
+  let g:ale_lint_on_save = 1
+  let g:ale_fix_on_save = 0
+  
+  " let g:ale_css_stylelint_executable = 'stylelint'
+  " let g:ale_css_stylelint_options = '--fix'
+  " let g:ale_scss_stylelint_executable = 'stylelint'
+  " let g:ale_scss_stylelint_options = '--fix'
+  let g:ale_scss_stylelint_use_global = 0
+'''
+
+# [[plugins]]
+# repo = 'neomake/neomake'
+# on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+# hook_source = '''
+#   let g:neomake_scss_enabled_makers = ['stylelint']
+#   let g:neomake_scss_stylelint_maker = {
+#     \ 'exe': 'stylelint',
+#     \ 'args': ['--fix'],
+#   \ }
+# '''
+
+# [[plugins]]
+# repo = 'sbdchd/neoformat'
+# on_cmd = 'Neoformat'
+# hook_source = '''
+#   let g:neoformat_enabled_scss = ['stylelint']
+#   let g:neoformat_scss_stylelint = {
+#     \ 'exe': 'stylelint',
+#     \ 'args': ['--fix', '--stdin-filename', '"%:t"'],
+#     \ 'stdin': 1,
+#   \ }
+# '''
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = ['neosnippet.vim', 'context_filetype.vim']
+on_event = 'InsertEnter'
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#auto_complete_delay = 0
+  let g:deoplete#auto_complete_start_length = 1
+
+  call deoplete#custom#option('omni_patterns', {
+    \ 'java': '[^. *\t]\.\w*',
+    \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+    \  'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+    \  'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+  \})
+'''
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_event = 'InsertEnter'
+hook_source = '''
+  let g:user_emmet_mode = 'iv'
+  let g:user_emmet_settings = {
+    \ 'variables' : {
+    \   'lang' : 'ja'
+    \ }
+  \ }
+  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+on_event = 'InsertEnter'
+depends = ['neosnippet-snippets']
+hook_source = '''
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+  let g:neosnippet#scope_aliases = {}
+  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
+
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_event = 'InsertEnter'
+
+# [[plugins]]
+# repo = 'honza/vim-snippets'
+# on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+  if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#same_filetypes = {}
+  endif
+  let g:context_filetype#same_filetypes.html = 'pcss'
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+on_event = 'VimEnter'
+
+[[plugins]]
+on_event = 'InsertEnter'
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'Valloric/MatchTagAlways'
+on_event = 'VimEnter'
+hook_add = '''
+  let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'html.twig' : 1,
+  \ }
+'''
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+on_event = 'VimEnter'
+hook_source = '''
+  autocmd FileType jinja setlocal commentstring={#\ %s\ #}
+'''
+

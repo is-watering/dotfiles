@@ -2,49 +2,20 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/deol.nvim'
-hook_add = '''
-  nnoremap <silent> <Leader>P :<C-u>Deol -command='fish' -split='horizontal'<CR>
-  tnoremap <ESC> <C-\><C-n>
-'''
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['neosnippet.vim', 'context_filetype.vim']
-on_event = 'InsertEnter'
-hook_add = '''
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#auto_complete_delay = 0
-  let g:deoplete#auto_complete_start_length = 1
-'''
-
-[[plugins]]
-repo = 'haya14busa/is.vim'
-
-[[plugins]]
 repo = 'osyo-manga/vim-over'
 hook_add = '''
   nnoremap <silent> ,m :OverCommandLine<CR>
 '''
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-
-[[plugins]]
-repo = 'alvan/vim-closetag'
-hook_add = '''
-  let g:closetag_filetypes = 'html,jinja'
-'''
-
-[[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
   call denite#custom#option('default', {
-      \   'direction': 'botright',
-      \   'split': 'horizontal',
-      \   'winheight': 8,
-      \   'winwidth': 20,
-      \ })
+    \ 'direction': 'botright',
+    \ 'split': 'horizontal',
+    \ 'winheight': 8,
+    \ 'winwidth': 20,
+  \ })
 
   autocmd FileType denite call s:denite_my_settings()
   function! s:denite_my_settings() abort
@@ -97,17 +68,17 @@ hook_add = '''
   endif
 
   call defx#custom#option('_', {
-      \   'columns': 'indent:mark:icons:filename:type',
-      \   'direction': 'topleft',
-      \   'toggle': 1,
-      \   'show_ignored_files': 1,
-      \   'split': 'vertical',
-      \   'winwidth': 28,
-      \ })
+    \ 'columns': 'indent:mark:icons:filename:type',
+    \ 'direction': 'topleft',
+    \ 'toggle': 1,
+    \ 'show_ignored_files': 1,
+    \ 'split': 'vertical',
+    \ 'winwidth': 28,
+  \ })
 
   call defx#custom#column('indent', {
-      \   'indent': '  ',
-      \ })
+    \ 'indent': '  ',
+  \ })
 
   nnoremap <silent><C-e> :Defx -auto-cd -resume `expand('%:p:h')`<CR>
 
@@ -199,13 +170,16 @@ hook_add = '''
 # [[plugins]]
 # repo = 'scrooloose/nerdtree'
 # hook_add = '''
-# nnoremap <silent><expr> <C-e> g:NERDTree.IsOpen() ? ":NERDTreeClose\<CR>" : ":NERDTreeFind\<CR>"
-#     let g:NERDTreeWinSize = 28
-#     " ファイルを開いたらNERDTreeを閉じる
-#     let g:NERDTreeQuitOnOpen=1
-#     " NERDTreeを同時に閉じる
-#     autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+#   nnoremap <silent><expr> <C-e> g:NERDTree.IsOpen() ? ":NERDTreeClose\<CR>" : ":NERDTreeFind\<CR>"
+#   let g:NERDTreeWinSize = 28
+#   " ファイルを開いたらNERDTreeを閉じる
+#   let g:NERDTreeQuitOnOpen=1
+#   " NERDTreeを同時に閉じる
+#   autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
 # '''
+
+# [[plugins]]
+# repo = 'severin-lemaignan/vim-minimap'
 
 [[plugins]]
 repo = 'skanehira/vsession'
@@ -213,9 +187,6 @@ hook_add = '''
   nnoremap <Leader>se :SaveSession
   nnoremap <Leader>lse :FloadSession<CR>
 '''
-
-# [[plugins]]
-# repo = 'severin-lemaignan/vim-minimap'
 
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
@@ -237,20 +208,20 @@ repo = 'itchyny/lightline.vim'
 depends = ['vim-fugitive']
 hook_add = '''
   let g:lightline = {
-    \   'colorscheme': 'powerline',
-    \   'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
-    \   },
-    \   'component_function': {
-    \     'gitbranch': 'LightLineFugitive'
-    \   },
-    \   'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
-    \   'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
-    \ }
+    \ 'colorscheme': 'powerline',
+    \ 'active': {
+    \ 'left': [ [ 'mode', 'paste' ],
+    \         [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+    \ 'right': [ [ 'lineinfo' ],
+    \          [ 'percent' ],
+    \          [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'LightLineFugitive'
+    \ },
+    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
+  \ }
 
   function! LightLineFugitive()
     try
@@ -269,72 +240,11 @@ hook_add = '''
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
-repo = 'mattn/emmet-vim'
-hook_add = '''
-  let g:user_emmet_mode = 'iv'
-  let g:user_emmet_settings = {
-    \   'variables' : {
-    \     'lang' : 'ja'
-    \   }
-    \ }
-  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-on_event = 'InsertEnter'
-depends = ['neosnippet-snippets']
-hook_add = '''
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-  let g:neosnippet#scope_aliases = {}
-  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
-
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-# [[plugins]]
-# repo = 'honza/vim-snippets'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-hook_add = '''
-  if !exists('g:context_filetype#same_filetypes')
-    let g:context_filetype#same_filetypes = {}
-  endif
-  let g:context_filetype#same_filetypes.html = 'pcss'
-'''
-
-[[plugins]]
-repo = 'tpope/vim-surround'
-
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-[[plugins]]
-repo = 'tpope/vim-commentary'
-hook_add = '''
-  autocmd FileType jinja setlocal commentstring={#\ %s\ #}
-'''
-
-[[plugins]]
-repo = 'Valloric/MatchTagAlways'
-hook_add = '''
-  let g:mta_filetypes = {
-    \   'html' : 1,
-    \   'xhtml' : 1,
-    \   'xml' : 1,
-    \   'jinja' : 1,
-    \   'html.twig' : 1,
-    \ }
-'''
+repo = 'tpope/vim-sleuth'
 
 [[plugins]]
 repo = 'delphinus/vim-auto-cursorline'
 
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'
+
