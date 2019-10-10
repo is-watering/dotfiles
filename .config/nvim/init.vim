@@ -7,17 +7,17 @@ set fileformats=unix,dos,mac
 set guifont=Cica:h14
 set printfont=Cica:h14
 set ambiwidth=single
-set number "行番号を表示
-set autoindent "改行時に自動でインデントする
-set wrap "自動折り返しを有効
-"set cursorline "カーソルラインを有効
+set number " 行番号を表示
+set autoindent " 改行時に自動でインデントする
+set wrap " 自動折り返しを有効
+"set cursorline " カーソルラインを有効
 set mouse=a
-set ignorecase "検索時に大文字小文字を無視
+set ignorecase " 検索時に大文字小文字を無視
 set smartcase
-set virtualedit=onemore "行末の1文字先までカーソルを移動できるように
-set autoread "外部でファイルに変更があったときに自動で読み直す
+set virtualedit=onemore " 行末の1文字先までカーソルを移動できるように
+set autoread " 外部でファイルに変更があったときに自動で読み直す
 au CursorHold * :checktime
-set hidden "ファイルを保存しなくても別のファイルを開けるように
+set hidden " ファイルを保存しなくても別のファイルを開けるように
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
 
@@ -39,7 +39,6 @@ nnoremap : ;
 
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
-
 autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
 
 """"""""""""""""""""""""""""""
@@ -104,9 +103,4 @@ hi Pmenu ctermbg=31
 hi PmenuSel ctermbg=43 ctermfg=20
 hi PmenuSbar ctermbg=249
 hi PmenuThumb ctermfg=240
-" highlight ALEErrorSign cterm=bold ctermfg=1 ctermbg=234
-" highlight ALEWarningSign cterm=bold ctermfg=11 ctermbg=234
-" highlight ALEError cterm=NONE ctermfg=0 ctermbg=1
-" highlight ALEWarning cterm=NONE ctermfg=0 ctermbg=11
-
 
