@@ -64,6 +64,29 @@ hook_source = '''
   let g:ale_scss_stylelint_use_global = 0
 '''
 
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+depends = ['lightline.vim', 'ale']
+on_source = ['ale']
+hook_add = '''
+  let g:lightline.component_expand = {
+    \ 'linter_checking': 'lightline#ale#checking',
+    \ 'linter_warnings': 'lightline#ale#warnings',
+    \ 'linter_errors': 'lightline#ale#errors',
+    \ 'linter_ok': 'lightline#ale#ok',
+  \ }
+  let g:lightline.component_type = {
+    \ 'linter_checking': 'left',
+    \ 'linter_warnings': 'warning',
+    \ 'linter_errors': 'error',
+    \ 'linter_ok': 'left',
+  \ }
+  let g:lightline#ale#indicator_checking = "Linting..."
+  let g:lightline#ale#indicator_warnings = "\uf071 Warning: "
+  let g:lightline#ale#indicator_errors = "\uf05e Error: "
+  let g:lightline#ale#indicator_ok = "\uf00c OK"
+'''
+
 # [[plugins]]
 # repo = 'neomake/neomake'
 # on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
@@ -188,7 +211,7 @@ hook_source = '''
     \   ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
     \   ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     \   ['月', '火', '水', '木', '金', '土', '日'],
-    "\   ['臨', '兵', '闘', '者', '皆', '陣', '烈', '在', '前'],
+    \   ['臨', '兵', '闘', '者', '皆', '陣', '烈', '在', '前'],
     \   ['true', 'false'],
     \   ['True', 'False'],
     \   ['on', 'off'],
@@ -253,7 +276,7 @@ repo = 'tpope/vim-commentary'
 on_event = 'VimEnter'
 hook_source = '''
   autocmd FileType jinja setlocal commentstring={#\ %s\ #}
-  autocmd FileType scss.css setlocal commentstring=/*\ %s\ */
+  autocmd BufNewFile,BufRead *.pcss setlocal commentstring=/*\ %s\ */
 '''
 
 [[plugins]]

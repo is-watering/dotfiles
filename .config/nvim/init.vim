@@ -1,6 +1,6 @@
 filetype plugin indent off
 
-set all& " init all settings
+" set all& " init all settings
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
@@ -18,8 +18,10 @@ set virtualedit=onemore " 行末の1文字先までカーソルを移動でき�
 set autoread " 外部でファイルに変更があったときに自動で読み直す
 au CursorHold * :checktime
 set hidden " ファイルを保存しなくても別のファイルを開けるように
+set backupcopy=yes " ファイルのコピーを作成し、保存時に上書き
+set mmp=20000
 
-au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
+au BufNewFile,BufRead *.{sass,scss,pcss,css} set filetype=scss.css
 
 let mapleader = "\<Space>"
 

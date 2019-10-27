@@ -171,10 +171,9 @@ hook_add = '''
 # repo = 'scrooloose/nerdtree'
 # hook_add = '''
 #   nnoremap <silent><expr> <C-e> g:NERDTree.IsOpen() ? ":NERDTreeClose\<CR>" : ":NERDTreeFind\<CR>"
-#   let g:NERDTreeWinSize = 28
-#   " ファイルを開いたらNERDTreeを閉じる
-#   let g:NERDTreeQuitOnOpen=1
-#   " NERDTreeを同時に閉じる
+#   let g:NERDTreeWinSize = 28 " ファイルを開いたらNERDTreeを閉じる
+#   let g:NERDTreeQuitOnOpen=1 " NERDTreeを同時に閉じる
+#   let g:NERDTreeShowHidden=1 " 隠しファイルを表示する
 #   autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
 # '''
 
@@ -208,13 +207,18 @@ repo = 'itchyny/lightline.vim'
 depends = ['vim-fugitive']
 hook_add = '''
   let g:lightline = {
-    \ 'colorscheme': 'powerline',
+    \ 'colorscheme': 'deus',
     \ 'active': {
-    \ 'left': [ [ 'mode', 'paste' ],
-    \         [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \          [ 'percent' ],
-    \          [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \ 'left': [
+    \           [ 'mode', 'paste' ],
+    \           [ 'gitbranch', 'readonly', 'filename', 'modified' ],
+    \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+    \         ],
+    \ 'right': [
+    \            [ 'lineinfo' ],
+    \            [ 'percent' ],
+    \            [ 'fileformat', 'fileencoding', 'filetype' ],
+    \          ]
     \ },
     \ 'component_function': {
     \   'gitbranch': 'LightLineFugitive'
@@ -235,6 +239,7 @@ hook_add = '''
     return ''
   endfunction
 '''
+
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
