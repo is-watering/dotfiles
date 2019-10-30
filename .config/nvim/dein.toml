@@ -238,6 +238,26 @@ hook_add = '''
     endtry
     return ''
   endfunction
+
+let s:palette = g:lightline#colorscheme#deus#palette
+let s:term_red = 204
+let s:term_green = 114
+let s:term_yellow = 180
+let s:term_blue = 39
+let s:term_purple = 170
+let s:term_white = 145
+let s:term_black = 235
+let s:term_grey = 236
+
+let s:white = 231
+let s:darkestcyan = 23
+let s:mediumcyan = 117
+let s:darkestblue = 24
+let s:darkblue = 31
+
+let s:palette.insert.left  = [ [ 23, 231, s:darkestcyan, s:white, 'bold' ], [ 231, 31, s:white, s:darkblue ] ]
+let s:palette.insert.right = [ [ 23, 117, s:darkestcyan, s:mediumcyan ], [ 117, 31, s:mediumcyan, s:darkblue ], [ 117, 24, s:mediumcyan, s:darkestblue ] ]
+let s:palette.insert.middle  = [ [ 117, 24, s:mediumcyan, s:darkestblue ] ]
 '''
 
 
