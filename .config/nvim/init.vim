@@ -13,8 +13,11 @@ set wrap " 自動折り返しを有効
 "set cursorline " カーソルラインを有効
 set mouse=a
 set ignorecase " 検索時に大文字小文字を無視
+set wrapscan " 最後尾まで検索を終えたら次の検索で先頭に移る
 set smartcase
 set virtualedit=onemore " 行末の1文字先までカーソルを移動できるように
+set whichwrap+=h,l,<,>,[,],b,s " 行末・行頭から次の行へ移動可能に
+set backspace=indent,eol,start "Backspaceキーの影響範囲に制限を設けない
 set autoread " 外部でファイルに変更があったときに自動で読み直す
 au CursorHold * :checktime
 set hidden " ファイルを保存しなくても別のファイルを開けるように
@@ -25,7 +28,7 @@ au BufNewFile,BufRead *.{sass,scss,pcss,css} set filetype=scss.css
 
 let mapleader = "\<Space>"
 
-set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 nnoremap ,y "+y
 vnoremap ,y "+y
 nnoremap ,Y "+Y
@@ -35,6 +38,9 @@ vnoremap ,p "+p
 nnoremap ,P "+P
 vnoremap ,P "+P
 
+" ビジュアルモードで連続ペースト
+vnoremap <silent> <C-p> "0p<CR>
+
 " ノーマルモード時だけ ; と : を入れ替える
 nnoremap ; :
 nnoremap : ;
@@ -42,6 +48,9 @@ nnoremap : ;
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
 autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
+
+" %で対応する括弧へ移動
+" source $VIMRUNTIME/macros/matchit.vim
 
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する

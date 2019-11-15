@@ -2,12 +2,6 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'osyo-manga/vim-over'
-hook_add = '''
-  nnoremap <silent> ,m :OverCommandLine<CR>
-'''
-
-[[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
   call denite#custom#option('default', {
@@ -51,12 +45,6 @@ hook_add = '''
   nnoremap <silent> <Leader>h :History<CR>
   tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
 '''
-
-[[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-
-[[plugins]]
-repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
@@ -188,15 +176,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-hook_add = '''
-  let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_auto_colors = 0
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=236
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=237
-'''
-
-[[plugins]]
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -239,36 +218,51 @@ hook_add = '''
     return ''
   endfunction
 
-let s:palette = g:lightline#colorscheme#deus#palette
-let s:term_red = 204
-let s:term_green = 114
-let s:term_yellow = 180
-let s:term_blue = 39
-let s:term_purple = 170
-let s:term_white = 145
-let s:term_black = 235
-let s:term_grey = 236
+  let s:palette = g:lightline#colorscheme#deus#palette
+  let s:term_red = 204
+  let s:term_green = 114
+  let s:term_yellow = 180
+  let s:term_blue = 39
+  let s:term_purple = 170
+  let s:term_white = 145
+  let s:term_black = 235
+  let s:term_grey = 236
 
-let s:white = 231
-let s:darkestcyan = 23
-let s:mediumcyan = 117
-let s:darkestblue = 24
-let s:darkblue = 31
+  let s:white = 231
+  let s:darkestcyan = 23
+  let s:mediumcyan = 117
+  let s:darkestblue = 24
+  let s:darkblue = 31
 
-let s:palette.insert.left  = [ [ 23, 231, s:darkestcyan, s:white, 'bold' ], [ 231, 31, s:white, s:darkblue ] ]
-let s:palette.insert.right = [ [ 23, 117, s:darkestcyan, s:mediumcyan ], [ 117, 31, s:mediumcyan, s:darkblue ], [ 117, 24, s:mediumcyan, s:darkestblue ] ]
-let s:palette.insert.middle  = [ [ 117, 24, s:mediumcyan, s:darkestblue ] ]
+  let s:palette.insert.left  = [ [ 23, 231, s:darkestcyan, s:white, 'bold' ], [ 231, 31, s:white, s:darkblue ] ]
+  let s:palette.insert.right = [ [ 23, 117, s:darkestcyan, s:mediumcyan ], [ 117, 31, s:mediumcyan, s:darkblue ], [ 117, 24, s:mediumcyan, s:darkestblue ] ]
+  let s:palette.insert.middle  = [ [ 117, 24, s:mediumcyan, s:darkestblue ] ]
 '''
 
+# [[plugins]]
+# repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
-repo = 'tpope/vim-fugitive'
+repo = 'sgur/vim-editorconfig'
+
+# [[plugins]]
+# repo = 'tmhedberg/matchit'
+
+# [[plugins]]
+# repo = 'andymass/vim-matchup'
+# # on_event = 'InsertEnter'
+# hook_add = '''
+#   let g:matchup_matchparen_enabled = 0
+# '''
 
 [[plugins]]
 repo = 'tpope/vim-sleuth'
 
 [[plugins]]
-repo = 'delphinus/vim-auto-cursorline'
+repo = 'tpope/vim-fugitive'
+
+# [[plugins]]
+# repo = 'delphinus/vim-auto-cursorline'
 
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'

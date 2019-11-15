@@ -10,16 +10,46 @@ hook_source = '''
   tnoremap <ESC> <C-\><C-n>
 '''
 
+# [[plugins]]
+# repo = 'osyo-manga/vim-over'
+# on_event = 'VimEnter'
+# hook_source = '''
+#   nnoremap <silent> ,m :OverCommandLine<CR>
+# '''
+
 [[plugins]]
 repo = 'haya14busa/is.vim'
 on_event = 'VimEnter'
 
 [[plugins]]
-repo = 'alvan/vim-closetag'
-on_event = 'InsertEnter'
-hook_source = '''
-  let g:closetag_filetypes = 'html,jinja'
+on_event = 'VimEnter'
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+on_event = 'VimEnter'
+hook_add = '''
+  let g:indent_guides_enable_on_vim_startup = 1
+  let g:indent_guides_auto_colors = 0
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=none
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#121212 ctermbg=233
 '''
+
+# [[plugins]]
+# repo = 'tweekmonster/local-indent.vim'
+# on_event = 'VimEnter'
+# hook_add = '''
+#   autocmd FileType * LocalIndentGuide +hl +cc
+#   autocmd VimEnter,Colorscheme * :hi LocalIndentGuide ctermfg=236 ctermbg=237 cterm=inverse
+#   autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=237 guibg=#3a3a3a
+# '''
+
+# [[plugins]]
+# repo = 'alvan/vim-closetag'
+# on_event = 'InsertEnter'
+# hook_source = '''
+#   let g:closetag_filetypes = 'html,jinja'
+# '''
 
 # [[plugins]]
 # repo = 'prettier/vim-prettier'
@@ -56,7 +86,7 @@ hook_source = '''
   let g:ale_lint_on_text_changed = 1
   let g:ale_lint_on_save = 1
   let g:ale_fix_on_save = 0
-  
+
   " let g:ale_css_stylelint_executable = 'stylelint'
   " let g:ale_css_stylelint_options = '--fix'
   " let g:ale_scss_stylelint_executable = 'stylelint'
@@ -269,13 +299,14 @@ hook_add = '''
     \ 'jinja' : 1,
     \ 'html.twig' : 1,
   \ }
+  let g:mta_use_matchparen_group = 0
 '''
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
 on_event = 'VimEnter'
 hook_source = '''
-  autocmd FileType jinja setlocal commentstring={#\ %s\ #}
+  autocmd FileType jinja setlocal commentstring={#-\ %s\ #}
   autocmd BufNewFile,BufRead *.pcss setlocal commentstring=/*\ %s\ */
 '''
 
