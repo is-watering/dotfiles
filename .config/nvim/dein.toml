@@ -261,8 +261,8 @@ repo = 'tpope/vim-sleuth'
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
-# [[plugins]]
-# repo = 'delphinus/vim-auto-cursorline'
+[[plugins]]
+repo = 'delphinus/vim-auto-cursorline'
 
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'

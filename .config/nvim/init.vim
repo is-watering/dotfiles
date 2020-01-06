@@ -47,7 +47,14 @@ nnoremap : ;
 
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
+" ESC代替
+inoremap <silent> jj <ESC>
+inoremap <silent> っｊ <ESC>
+inoremap <silent> っj <ESC>
+
 autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
+
+autocmd FileType html,jinja inoremap ,br <br>
 
 " %で対応する括弧へ移動
 " source $VIMRUNTIME/macros/matchit.vim
