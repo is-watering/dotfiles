@@ -17,7 +17,7 @@ URxvt.fading:               40
 
 !! Font list and Spacing
 URxvt.font:                 xft:Cica:size=14,\
-                            xft:DejaVu Sans Mono Nerd Font Mono
+                            xft:DejaVu Sans Mono Nerd Font Mono:size=14
 URxvt.letterSpace:          0
 !URxvt.lineSpace:           0
 
@@ -76,6 +76,10 @@ URxvt.resize-font.step: 2
 URxvt.keysym.C-Down: resize-font:smaller
 URxvt.keysym.C-Up: resize-font:bigger
 
+!! input method
+URxvt.perl-ext: xim-onthespot
+URxvt.inputMethod: fcitx
+URxvt.preeditType: OnTheSpot
 
 ! Key Bindings
 ! ============
