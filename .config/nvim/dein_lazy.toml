@@ -314,3 +314,7 @@ hook_source = '''
 repo = 'lilydjwg/colorizer'
 on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
 
+[[plugins]]
+repo = 'junegunn/goyo.vim'
+on_event = 'VimEnter'
+
