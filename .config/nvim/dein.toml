@@ -183,7 +183,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['vim-fugitive']
 hook_add = '''
   let g:lightline = {
     \ 'colorscheme': 'deus',
@@ -200,21 +199,17 @@ hook_add = '''
     \          ]
     \ },
     \ 'component_function': {
-    \   'gitbranch': 'LightLineFugitive'
+    \   'gitbranch': 'GitBranch'
     \ },
     \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
     \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" }
   \ }
 
-  function! LightLineFugitive()
-    try
-      if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-        let mark = "\ue725 "  " edit here for cool mark
-        let _ = fugitive#head()
-        return strlen(_) ? mark._ : ''
-      endif
-    catch
-    endtry
+  function! GitBranch()
+    if exists("*gitbranch#name")
+      let _ = gitbranch#name()
+      return strlen(_) ? "\ue725 "._ : ''
+    endif
     return ''
   endfunction
 
@@ -258,8 +253,11 @@ repo = 'sgur/vim-editorconfig'
 [[plugins]]
 repo = 'tpope/vim-sleuth'
 
+# [[plugins]]
+# repo = 'tpope/vim-fugitive'
+
 [[plugins]]
-repo = 'tpope/vim-fugitive'
+repo = 'itchyny/vim-gitbranch'
 
 [[plugins]]
 repo = 'delphinus/vim-auto-cursorline'

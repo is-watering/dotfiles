@@ -35,6 +35,13 @@ hook_add = '''
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#121212 ctermbg=233
 '''
 
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+on_event = 'VimEnter'
+hook_source = '''
+  nmap <Esc> <Plug>(clever-f-reset)
+'''
+
 # [[plugins]]
 # repo = 'tweekmonster/local-indent.vim'
 # on_event = 'VimEnter'
