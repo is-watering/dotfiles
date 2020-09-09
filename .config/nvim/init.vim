@@ -23,6 +23,7 @@ au CursorHold * :checktime
 set hidden " ファイルを保存しなくても別のファイルを開けるように
 set backupcopy=yes " ファイルのコピーを作成し、保存時に上書き
 set mmp=20000
+" set winblend=1 " Floating windows pseudo-transparency
 
 au BufNewFile,BufRead *.{sass,scss,pcss,css} set filetype=scss.css
 
@@ -52,7 +53,7 @@ inoremap <silent> jj <ESC>
 inoremap <silent> っｊ <ESC>
 inoremap <silent> っj <ESC>
 
-autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
+autocmd ColorScheme * hi CursorLine cterm=none ctermbg=237
 
 autocmd FileType html,jinja inoremap ,br <br>
 
@@ -121,4 +122,6 @@ hi Pmenu ctermbg=31
 hi PmenuSel ctermbg=43 ctermfg=20
 hi PmenuSbar ctermbg=249
 hi PmenuThumb ctermfg=240
+
+hi NormalFloat ctermfg=253 ctermbg=23
 
