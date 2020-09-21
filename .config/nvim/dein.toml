@@ -4,17 +4,44 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
-  let s:denite_win_width_percent = 0.85
-  let s:denite_win_height_percent = 0.7
+  let s:denite_win_width_percent = 0.8
+  let s:denite_win_height_percent = 0.4
 
   call denite#custom#option('default', {
+    "\ 'auto_action': 'preview',
     \ 'direction': 'botright',
     \ 'split': 'floating',
+    \ 'filter_split_direction': 'floating',
+    \ 'prompt': '🐝',
+    \ 'statusline': v:true,
+    \ 'floating_preview': v:true,
+    \ 'vertical_preview': v:true,
+    \ 'preview_width': float2nr(&columns * s:denite_win_width_percent),
+    \ 'preview_height': float2nr(&lines * s:denite_win_height_percent),
     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+    \ 'cached_filter': v:true,
+    \ 'cursor_shape': v:true,
+    \ 'cursor_wrap': v:true,
+    \ 'start_filter': v:false,
+    \ 'match_highlight': v:true,
+    \ 'highlight_prompt': 'Search',
+    \ 'highlight_filter_background': 'Search',
+    \ 'highlight_matched_char': 'Search',
+    \ 'highlight_matched_range': 'Search',
+    \ 'highlight_window_background': 'NormalFloat',
   \ })
+
+  autocmd FileType denite highlight Search ctermfg=226 ctermbg=232
+  autocmd FileType denite highlight Pmenu ctermfg=199 ctermbg=85
+  autocmd FileType denite highlight PmenuSel ctermfg=226 ctermbg=196
+
+  "call denite#custom#source('file/old,file_mru,file/rec', 'converters',
+  "  \ ['converter_relative_word'])
+  "call denite#custom#source('file/old,file_mru', 'converters',
+  "  \ ['converter/basename_to_top'])
 
   autocmd FileType denite call s:denite_my_settings()
   function! s:denite_my_settings() abort
@@ -34,26 +61,92 @@ hook_add = '''
     \ denite#do_map('toggle_select').'j'
   endfunction
 
-  autocmd FileType denite set winblend=60
-  autocmd FileType denite-filter set winblend=60
+  autocmd FileType denite set winblend=0
+  autocmd FileType denite-filter set winblend=0
 
+  "nnoremap <leader>o :<C-u>Denite file/old<CR>
+  "nnoremap <leader>f :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Leader>b :<C-u>Denite buffer<CR>
   nnoremap <Leader>r :<C-u>Denite register<CR>
-  nnoremap <leader>h :Denite<space>file/old<CR>
 '''
+depends = ['nabezokodaikon/denite-converter-basename_to_top']
+
+[[plugins]]
+repo = 'nabezokodaikon/denite-converter-basename_to_top'
 
 # [[plugins]]
-# repo = 'junegunn/fzf'
-# depends = ['fzf.vim']
-# build = './install --all'
-# merged = 0
+# repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+hook_add = '''
+  nnoremap <Leader>f :<C-u>ProjectFiles<CR>
+  nnoremap <Leader>h :<C-u>History<CR>
+  "nnoremap <Leader>b :<C-u>Buffers<CR>
+
+  function! s:find_git_root()
+    " プロジェクトルートで開く
+    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+  endfunction
+
+  command! ProjectFiles execute 'Files' s:find_git_root()
+  " command! -bang -nargs=? -complete=dir Files
+  "     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  command! -bang -nargs=? -complete=dir Files
+      \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'head -20 {}']}, <bang>0)
+
+  " floating window
+  "let $FZF_DEFAULT_OPTS='--layout=reverse'
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+  function! FloatingFZF()
+    let buf = nvim_create_buf(v:false, v:true)
+    call setbufvar(buf, '&signcolumn', 'no')
+
+    let height = &lines - 10
+    let width = float2nr(&columns - (&columns * 2 / 10))
+    let col = float2nr((&columns - width) / 2)
+
+    let opts = {
+      \ 'relative': 'editor',
+      \ 'row': 4,
+      \ 'col': col,
+      \ 'width': width,
+      \ 'height': height
+      \ }
+
+    call nvim_open_win(buf, v:true, opts)
+  endfunction
+'''
+depends = ['junegunn/fzf']
 
 # [[plugins]]
-# repo = 'junegunn/fzf.vim'
+# repo = 'yuki-ycino/fzf-preview.vim'
+# rev = 'release'
 # hook_add = '''
-#   nnoremap <silent> <Leader>h :History<CR>
-#   tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
+#   let g:fzf_preview_default_fzf_options = {
+#     "\ '--reverse': v:true,
+#     \ '--preview-window': '',
+#     \ }
+#   let g:fzf_preview_use_dev_icons = 1
+#   let g:fzf_preview_dev_icon_prefix_string_length = 10
+
+#   nmap <Leader>f [fzf-p]
+#   xmap <Leader>f [fzf-p]
+#   nnoremap <Leader>f :<C-u>FzfPreviewProjectFiles<CR>
+#   nnoremap <Leader>b :<C-u>FzfPreviewBuffers<CR>
+#   nnoremap <Leader>m :<C-u>FzfPreviewProjectOldFiles<CR>
+#   nnoremap <Leader>h :FzfPreviewOldFiles<CR>
+#   nnoremap <Leader>r :FzfPreviewYankround<CR>
 # '''
+
+# [[plugins]]
+# repo = 'LeafCage/yankround.vim'
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
@@ -157,6 +250,12 @@ hook_add = '''
 '''
 
 # [[plugins]]
+# repo = 'ryanoasis/vim-devicons'
+# hook_add = '''
+#   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+# '''
+
+# [[plugins]]
 # repo = 'cocopon/vaffle.vim'
 # hook_add = '''
 #   nnoremap <silent><C-e> :Vaffle<CR>
@@ -182,12 +281,6 @@ repo = 'skanehira/vsession'
 hook_add = '''
   nnoremap <Leader>se :SaveSession
   nnoremap <Leader>lse :FloadSession<CR>
-'''
-
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-hook_add = '''
-  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 '''
 
 [[plugins]]
@@ -224,23 +317,50 @@ hook_add = '''
 
   let s:palette = g:lightline#colorscheme#deus#palette
   let s:term_red = 204
-  let s:term_green = 114
+  let s:term_green = 124
   let s:term_yellow = 180
   let s:term_blue = 39
   let s:term_purple = 170
   let s:term_white = 145
   let s:term_black = 235
   let s:term_grey = 236
-
+  
+  let s:black = 236
   let s:white = 231
+  let s:comment_grey = 252
+  let s:gutter_grey = 239
+  let s:cursor_grey = 236
+  let s:visual_grey = 237
+
+  let s:green = 78
+  let s:darkgreen = 28
+  let s:darkestgreen = 22
+  let s:darkgreen = 28
+  let s:darkestgreen = 22
   let s:darkestcyan = 23
   let s:mediumcyan = 117
   let s:darkestblue = 24
   let s:darkblue = 31
+  let s:purple = 165
+  let s:darkpurple = 91
+  let s:red = 160
+  let s:darkred = 124
+  
+  let s:palette.normal.left  = [ [ 23, 231, s:comment_grey, s:darkgreen, 'bold' ], [ 231, 31, s:green, s:black ] ]
+  let s:palette.normal.middle  = [ [ 117, 24, s:green, s:black ] ]
+  let s:palette.normal.right = [ [ 23, 117, s:comment_grey, s:darkgreen ], [ 117, 31, s:comment_grey, s:gutter_grey ], [ 117, 24, s:green, s:black ] ]
 
-  let s:palette.insert.left  = [ [ 23, 231, s:darkestcyan, s:white, 'bold' ], [ 231, 31, s:white, s:darkblue ] ]
-  let s:palette.insert.right = [ [ 23, 117, s:darkestcyan, s:mediumcyan ], [ 117, 31, s:mediumcyan, s:darkblue ], [ 117, 24, s:mediumcyan, s:darkestblue ] ]
+  let s:palette.insert.left  = [ [ 23, 231, s:darkestcyan, s:mediumcyan, 'bold' ], [ 231, 31, s:mediumcyan, s:darkestblue ] ]
   let s:palette.insert.middle  = [ [ 117, 24, s:mediumcyan, s:darkestblue ] ]
+  let s:palette.insert.right = [ [ 23, 117, s:darkestcyan, s:mediumcyan ], [ 117, 31, s:mediumcyan, s:darkblue ], [ 117, 24, s:mediumcyan, s:darkestblue ] ]
+  
+  let s:palette.visual.left  = [ [ 23, 231, s:comment_grey, s:darkpurple, 'bold' ], [ 231, 31, s:purple, s:black ] ]
+  let s:palette.visual.middle  = [ [ 117, 24, s:purple, s:black ] ]
+  let s:palette.visual.right = [ [ 23, 117, s:comment_grey, s:darkpurple ], [ 117, 31, s:comment_grey, s:gutter_grey ], [ 117, 24, s:purple, s:black ] ]
+  
+  let s:palette.replace.left  = [ [ 23, 231, s:comment_grey, s:darkred, 'bold' ], [ 231, 31, s:red, s:black ] ]
+  let s:palette.replace.middle  = [ [ 117, 24, s:red, s:black ] ]
+  let s:palette.replace.right = [ [ 23, 117, s:comment_grey, s:darkred ], [ 117, 31, s:comment_grey, s:gutter_grey ], [ 117, 24, s:red, s:black ] ]
 '''
 
 # [[plugins]]
@@ -271,6 +391,96 @@ repo = 'itchyny/vim-gitbranch'
 [[plugins]]
 repo = 'delphinus/vim-auto-cursorline'
 
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = ['neosnippet.vim', 'context_filetype.vim']
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+
+  call deoplete#custom#option({
+    \ 'auto_complete_delay': 0,
+    \ 'min_pattern_length': 2,
+  \})
+
+  call deoplete#custom#option('omni_patterns', {
+    \ 'java': '[^. *\t]\.\w*',
+    \ 'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+    \ 'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+    \ 'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+  \})
+
+  call deoplete#custom#var('omni', 'functions', {
+  \ 'css,stylus': ['csscomplete#CompleteCSS']
+  \})
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets']
+hook_source = '''
+  " Plugin key-mappings.
+  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target) [ xmap <C-k> <Plug>（neosnippet_expand_target）] 
+
+  " SuperTab like snippets behavior.
+  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+  "imap <expr><TAB>
+  " \ pumvisible() ? "\<C-n>" :
+  " \ neosnippet#expandable_or_jumpable() ?
+  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  " For conceal markers.
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+  let g:neosnippet#scope_aliases = {}
+  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+# [[plugins]]
+# repo = 'honza/vim-snippets'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_source = '''
+  if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#filetypes = {}
+  endif
+  let g:context_filetype#filetypes = {
+    \ 'html': [
+    \   {
+    \     'filetype': 'css',
+    \     'start': '<style\%( [^>]*\)\?>',
+    \     'end': '</style>',
+    \   },
+    \   {
+    \     'filetype': 'css',
+    \     'start': '<[^>]\+ style=\([''"]\)',
+    \     'end': '\1',
+    \   },
+    \ ],
+    \ 'toml': [
+    \   {
+    \     'filetype': 'vim',
+    \     'start': '^\s*hook_\(add\|source\|post_source\)\s*=\s*'."'"."''",
+    \     'end': "'"."''"
+    \   },
+    \ ],
+  \}
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'
-

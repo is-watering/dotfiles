@@ -23,9 +23,14 @@ au CursorHold * :checktime
 set hidden " ファイルを保存しなくても別のファイルを開けるように
 set backupcopy=yes " ファイルのコピーを作成し、保存時に上書き
 set mmp=20000
+set title
+set hlsearch
+hi Search ctermbg=43
+hi Search ctermfg=20
 " set winblend=1 " Floating windows pseudo-transparency
 
-au BufNewFile,BufRead *.{sass,scss,pcss,css} set filetype=scss.css
+au BufNewFile,BufRead *.{css,sass,scss,pcss,styl} set filetype=scss.css
+au BufNewFile,BufRead *.{njk} set filetype=html.twig
 
 let mapleader = "\<Space>"
 
@@ -53,7 +58,7 @@ inoremap <silent> jj <ESC>
 inoremap <silent> っｊ <ESC>
 inoremap <silent> っj <ESC>
 
-autocmd ColorScheme * hi CursorLine cterm=none ctermbg=237
+" autocmd ColorScheme * hi CursorLine cterm=none ctermbg=237
 
 autocmd FileType html,jinja inoremap ,br <br>
 
@@ -123,5 +128,6 @@ hi PmenuSel ctermbg=43 ctermfg=20
 hi PmenuSbar ctermbg=249
 hi PmenuThumb ctermfg=240
 
-hi NormalFloat ctermfg=253 ctermbg=23
+hi NormalFloat ctermfg=250 ctermbg=240
+
 

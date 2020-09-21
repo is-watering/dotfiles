@@ -147,22 +147,17 @@ hook_source = '''
 #   \ }
 # '''
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['neosnippet.vim', 'context_filetype.vim']
-on_event = 'InsertEnter'
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#auto_complete_delay = 0
-  let g:deoplete#auto_complete_start_length = 1
-
-  call deoplete#custom#option('omni_patterns', {
-    \ 'java': '[^. *\t]\.\w*',
-    \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-    \  'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-    \  'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-  \})
-'''
+# [[plugins]]
+# repo = 'neoclide/coc.nvim'
+# on_event = 'VimEnter'
+# hook_source = '''
+#   let g:coc_filetype_map = {
+#     \ 'mustache': 'html',
+#     \ 'html.twig': 'html',
+#     \ 'scss.css': 'css',
+#     \ 'stylus': 'css',
+#     \ }
+# '''
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
@@ -175,38 +170,6 @@ hook_source = '''
     \ }
   \ }
   imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-on_event = 'InsertEnter'
-depends = ['neosnippet-snippets']
-hook_source = '''
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-  let g:neosnippet#scope_aliases = {}
-  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
-
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-on_event = 'InsertEnter'
-
-# [[plugins]]
-# repo = 'honza/vim-snippets'
-# on_event = 'InsertEnter'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-on_event = 'InsertEnter'
-hook_source = '''
-  if !exists('g:context_filetype#same_filetypes')
-    let g:context_filetype#same_filetypes = {}
-  endif
-  let g:context_filetype#same_filetypes.html = 'pcss'
 '''
 
 [[plugins]]
