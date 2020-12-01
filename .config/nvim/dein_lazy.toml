@@ -184,6 +184,10 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'ncm2/float-preview.nvim'
+on_i = 1
+
+[[plugins]]
 repo = 'lighttiger2505/deoplete-vim-lsp'
 on_i = 1
 
