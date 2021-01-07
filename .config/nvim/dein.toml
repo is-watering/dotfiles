@@ -69,10 +69,10 @@ hook_add = '''
   nnoremap <Leader>b :<C-u>Denite buffer<CR>
   nnoremap <Leader>r :<C-u>Denite register<CR>
 '''
-depends = ['nabezokodaikon/denite-converter-basename_to_top']
 
 [[plugins]]
 repo = 'nabezokodaikon/denite-converter-basename_to_top'
+depends = ['denite.nvim']
 
 # [[plugins]]
 # repo = 'Shougo/neomru.vim'
@@ -150,7 +150,6 @@ depends = ['junegunn/fzf']
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
-depends = ['defx-icons']
 hook_add = '''
   if !has('nvim')
     call dein#add('roxma/nvim-yarp')
@@ -245,6 +244,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kristijanhusak/defx-icons'
+depends = ['defx.nvim']
 hook_add = '''
   let g:defx_icons_enable_syntax_highlight = 0
 '''
@@ -392,57 +392,10 @@ repo = 'itchyny/vim-gitbranch'
 repo = 'delphinus/vim-auto-cursorline'
 
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['neosnippet.vim', 'context_filetype.vim']
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-
-  call deoplete#custom#option({
-    \ 'auto_complete_delay': 0,
-    \ 'min_pattern_length': 2,
-  \})
-
-  call deoplete#custom#option('omni_patterns', {
-    \ 'java': '[^. *\t]\.\w*',
-    \ 'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-    \ 'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-    \ 'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-  \})
-
-  call deoplete#custom#var('omni', 'functions', {
-  \ 'css,stylus': ['csscomplete#CompleteCSS']
-  \})
-'''
+repo = 'prabirshrestha/vim-lsp'
 
 [[plugins]]
-repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets']
-hook_source = '''
-  " Plugin key-mappings.
-  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k>     <Plug>(neosnippet_expand_target) [ xmap <C-k> <Plug>（neosnippet_expand_target）] 
-
-  " SuperTab like snippets behavior.
-  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-  "imap <expr><TAB>
-  " \ pumvisible() ? "\<C-n>" :
-  " \ neosnippet#expandable_or_jumpable() ?
-  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-  " For conceal markers.
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-  let g:neosnippet#scope_aliases = {}
-  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
-'''
+repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -484,3 +437,4 @@ repo = 'osyo-manga/vim-precious'
 
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'
+

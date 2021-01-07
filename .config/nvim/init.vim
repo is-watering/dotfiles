@@ -24,6 +24,7 @@ set hidden " ファイルを保存しなくても別のファイルを開ける�
 set backupcopy=yes " ファイルのコピーを作成し、保存時に上書き
 set mmp=20000
 set title
+set completeopt=menuone
 set hlsearch
 hi Search ctermbg=43
 hi Search ctermfg=20
