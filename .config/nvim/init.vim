@@ -8,16 +8,17 @@ set guifont=Cica:h14
 set printfont=Cica:h14
 set ambiwidth=single
 set number " 行番号を表示
+" set relativenumber " 相対行番号を表示
 set autoindent " 改行時に自動でインデントする
 set wrap " 自動折り返しを有効
-"set cursorline " カーソルラインを有効
+" set cursorline " カーソルラインを有効
 set mouse=a
 set ignorecase " 検索時に大文字小文字を無視
 set wrapscan " 最後尾まで検索を終えたら次の検索で先頭に移る
 set smartcase
 set virtualedit=onemore " 行末の1文字先までカーソルを移動できるように
 set whichwrap+=h,l,<,>,[,],b,s " 行末・行頭から次の行へ移動可能に
-set backspace=indent,eol,start "Backspaceキーの影響範囲に制限を設けない
+set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
 set autoread " 外部でファイルに変更があったときに自動で読み直す
 au CursorHold * :checktime
 set hidden " ファイルを保存しなくても別のファイルを開けるように
@@ -54,6 +55,7 @@ nnoremap : ;
 
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
+
 " ESC代替
 inoremap <silent> jj <ESC>
 inoremap <silent> っｊ <ESC>
@@ -61,7 +63,7 @@ inoremap <silent> っj <ESC>
 
 " autocmd ColorScheme * hi CursorLine cterm=none ctermbg=237
 
-autocmd FileType html,jinja inoremap ,br <br>
+autocmd FileType html,jinja,php inoremap ,br <br>
 
 " %で対応する括弧へ移動
 " source $VIMRUNTIME/macros/matchit.vim

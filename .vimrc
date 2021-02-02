@@ -7,23 +7,24 @@ set fileformats=unix,dos,mac
 set guifont=Cica:h14
 set printfont=Cica:h14
 set ambiwidth=single
-set number "行番号を表示
-set autoindent "改行時に自動でインデントする
-set wrap "自動折り返しを有効
-set cursorline "カーソルラインを有効
+set number " 行番号を表示
+set autoindent " 改行時に自動でインデントする
+set wrap " 自動折り返しを有効
+set cursorline " カーソルラインを有効
 set mouse=a
-set ignorecase "検索時に大文字小文字を無視
+set ignorecase " 検索時に大文字小文字を無視
 set smartcase
 set virtualedit=onemore "行末の1文字先までカーソルを移動できるように
-set autoread "外部でファイルに変更があったときに自動で読み直す
+set autoread " 外部でファイルに変更があったときに自動で読み直す
 au CursorHold * :checktime
-set hidden "ファイルを保存しなくても別のファイルを開けるように
+set hidden " ファイルを保存しなくても別のファイルを開けるように
+set showcmd " 入力中のコマンドを表示
 
 au BufRead,BufNewFile *.{sass,scss,pcss,css} set filetype=scss.css
 
 let mapleader = "\<Space>"
 
-set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 nnoremap ,y "+y
 vnoremap ,y "+y
 nnoremap ,Y "+Y
@@ -39,8 +40,18 @@ nnoremap : ;
 
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
+" ESC代替
+inoremap <silent> jj <ESC>
+inoremap <silent> っｊ <ESC>
+inoremap <silent> っj <ESC>
 
-autocmd ColorScheme * highlight CursorLine cterm=none ctermbg=237
+" autocmd ColorScheme * hi CursorLine cterm=none ctermbg=237
+
+autocmd FileType html,jinja,php inoremap ,br <br>
+
+" %で対応する括弧へ移動
+packadd! matchit
+let b:match_words = "if:endif,foreach:endforeach,\<begin\>:\<end\>"
 
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する
@@ -78,9 +89,23 @@ if dein#load_state('$HOME/.cache/dein')
     tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
   
   call dein#add('Shougo/deoplete.nvim')
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#auto_complete_delay = 0
-    let g:deoplete#auto_complete_start_length = 1
+  let g:deoplete#enable_at_startup = 1
+
+  call deoplete#custom#option({
+    \ 'auto_complete_delay': 0,
+    \ 'min_pattern_length': 2,
+  \})
+
+  call deoplete#custom#option('omni_patterns', {
+    \ 'java': '[^. *\t]\.\w*',
+    \ 'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+    \ 'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+    \ 'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+  \})
+
+  call deoplete#custom#var('omni', 'functions', {
+  \ 'css,stylus': ['csscomplete#CompleteCSS']
+  \})
   
   " Add or remove your plugins here like this:
   "call dein#add('Shougo/neosnippet.vim')
@@ -92,6 +117,7 @@ if dein#load_state('$HOME/.cache/dein')
     nnoremap <silent><C-e> :NERDTreeToggle<CR>
     " ファイルを開いたらNERDTreeを閉じる
     let g:NERDTreeQuitOnOpen=1
+    let NERDTreeShowHidden=1
     " NERDTreeを同時に閉じる
     autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
     

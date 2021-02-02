@@ -10,12 +10,12 @@ on_event = 'VimEnter'
 #   tnoremap <ESC> <C-\><C-n>
 # '''
 
-# [[plugins]]
-# repo = 'osyo-manga/vim-over'
-# on_event = 'VimEnter'
-# hook_source = '''
-#   nnoremap <silent> ,m :OverCommandLine<CR>
-# '''
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+on_event = 'VimEnter'
+hook_source = '''
+  nnoremap <silent> ,m :OverCommandLine<CR>
+'''
 
 [[plugins]]
 repo = 'haya14busa/is.vim'
@@ -53,6 +53,12 @@ repo = 'rhysd/clever-f.vim'
 on_event = 'VimEnter'
 hook_source = '''
   nmap <Esc> <Plug>(clever-f-reset)
+'''
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+on_event = 'VimEnter'
+hook_source = '''
 '''
 
 # [[plugins]]
@@ -363,5 +369,3 @@ on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
 
 [[plugins]]
 repo = 'junegunn/goyo.vim'
-on_event = 'VimEnter'
-

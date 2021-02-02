@@ -372,12 +372,16 @@ repo = 'sgur/vim-editorconfig'
 # [[plugins]]
 # repo = 'tmhedberg/matchit'
 
-# [[plugins]]
-# repo = 'andymass/vim-matchup'
-# # on_event = 'InsertEnter'
-# hook_add = '''
-#   let g:matchup_matchparen_enabled = 0
-# '''
+[[plugins]]
+repo = 'andymass/vim-matchup'
+# on_event = 'InsertEnter'
+hook_add = '''
+  let g:matchup_matchparen_enabled = 0
+  let g:matchup_matchpref = {
+    \ 'html': { 'nolists': 1 },
+    \ 'html.twig': { 'nolists': 1 },
+  \ }
+'''
 
 [[plugins]]
 repo = 'tpope/vim-sleuth'
