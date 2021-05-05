@@ -56,6 +56,9 @@ nnoremap : ;
 " ノーマルモードでEnter押すと改行
 nnoremap <CR> i<CR><ESC>
 
+" インサートモードを抜けたときにIMEオフ
+inoremap <ESC> <ESC>:set iminsert=0<CR>
+
 " ESC代替
 inoremap <silent> jj <ESC>
 inoremap <silent> っｊ <ESC>
