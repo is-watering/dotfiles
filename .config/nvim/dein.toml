@@ -439,6 +439,22 @@ hook_source = '''
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 
+# [[plugins]]
+# repo = 'Shougo/vimproc.vim'
+
+[[plugins]]
+repo = 'tyru/eskk.vim'
+hook_source = '''
+let g:eskk#directory = "~/.eskk"
+" let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 0, 'encoding': 'utf-8', }
+let g:eskk#large_dictionary = { 'path': "~/.eskk/SKK-JISYO.utf8.L", 'sorted': 1, 'encoding': 'utf-8', }
+let g:eskk#enable_completion = 1
+let g:eskk#server = {
+\   'host': '0.0.0.0',
+\   'port': 55000,
+\}
+'''
+
 [[plugins]] # カラースキーマ
 repo = 'vim-scripts/twilight256.vim'
 

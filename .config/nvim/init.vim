@@ -57,7 +57,8 @@ nnoremap : ;
 nnoremap <CR> i<CR><ESC>
 
 " インサートモードを抜けたときにIMEオフ
-inoremap <ESC> <ESC>:set iminsert=0<CR>
+" inoremap <ESC> <ESC>:set iminsert=0<CR>
+" inoremap <CR>[ <CR>[:set iminsert=0<CR>
 
 " ESC代替
 inoremap <silent> jj <ESC>
