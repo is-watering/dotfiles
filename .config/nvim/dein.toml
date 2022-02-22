@@ -1,74 +1,74 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-hook_add = '''
-  let s:denite_win_width_percent = 0.8
-  let s:denite_win_height_percent = 0.4
+# [[plugins]]
+# repo = 'Shougo/denite.nvim'
+# hook_add = '''
+#   let s:denite_win_width_percent = 0.8
+#   let s:denite_win_height_percent = 0.4
 
-  call denite#custom#option('default', {
-    "\ 'auto_action': 'preview',
-    \ 'direction': 'botright',
-    \ 'split': 'floating',
-    \ 'filter_split_direction': 'floating',
-    \ 'prompt': '🐝',
-    \ 'statusline': v:true,
-    \ 'floating_preview': v:true,
-    \ 'vertical_preview': v:true,
-    \ 'preview_width': float2nr(&columns * s:denite_win_width_percent),
-    \ 'preview_height': float2nr(&lines * s:denite_win_height_percent),
-    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
-    \ 'cached_filter': v:true,
-    \ 'cursor_shape': v:true,
-    \ 'cursor_wrap': v:true,
-    \ 'start_filter': v:false,
-    \ 'match_highlight': v:true,
-    \ 'highlight_prompt': 'Search',
-    \ 'highlight_filter_background': 'Search',
-    \ 'highlight_matched_char': 'Search',
-    \ 'highlight_matched_range': 'Search',
-    \ 'highlight_window_background': 'NormalFloat',
-  \ })
+#   call denite#custom#option('default', {
+#     "\ 'auto_action': 'preview',
+#     \ 'direction': 'botright',
+#     \ 'split': 'floating',
+#     \ 'filter_split_direction': 'floating',
+#     \ 'prompt': '🐝',
+#     \ 'statusline': v:true,
+#     \ 'floating_preview': v:true,
+#     \ 'vertical_preview': v:true,
+#     \ 'preview_width': float2nr(&columns * s:denite_win_width_percent),
+#     \ 'preview_height': float2nr(&lines * s:denite_win_height_percent),
+#     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+#     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+#     \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+#     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+#     \ 'cached_filter': v:true,
+#     \ 'cursor_shape': v:true,
+#     \ 'cursor_wrap': v:true,
+#     \ 'start_filter': v:false,
+#     \ 'match_highlight': v:true,
+#     \ 'highlight_prompt': 'Search',
+#     \ 'highlight_filter_background': 'Search',
+#     \ 'highlight_matched_char': 'Search',
+#     \ 'highlight_matched_range': 'Search',
+#     \ 'highlight_window_background': 'NormalFloat',
+#   \ })
 
-  autocmd FileType denite highlight Search ctermfg=226 ctermbg=232
-  autocmd FileType denite highlight Pmenu ctermfg=199 ctermbg=85
-  autocmd FileType denite highlight PmenuSel ctermfg=226 ctermbg=196
+#   autocmd FileType denite highlight Search ctermfg=226 ctermbg=232
+#   autocmd FileType denite highlight Pmenu ctermfg=199 ctermbg=85
+#   autocmd FileType denite highlight PmenuSel ctermfg=226 ctermbg=196
 
-  "call denite#custom#source('file/old,file_mru,file/rec', 'converters',
-  "  \ ['converter_relative_word'])
-  "call denite#custom#source('file/old,file_mru', 'converters',
-  "  \ ['converter/basename_to_top'])
+#   "call denite#custom#source('file/old,file_mru,file/rec', 'converters',
+#   "  \ ['converter_relative_word'])
+#   "call denite#custom#source('file/old,file_mru', 'converters',
+#   "  \ ['converter/basename_to_top'])
 
-  autocmd FileType denite call s:denite_my_settings()
-  function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-    \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> d
-    \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> p
-    \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> <ESC>
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-    \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
-    \ denite#do_map('toggle_select').'j'
-  endfunction
+#   autocmd FileType denite call s:denite_my_settings()
+#   function! s:denite_my_settings() abort
+#     nnoremap <silent><buffer><expr> <CR>
+#     \ denite#do_map('do_action')
+#     nnoremap <silent><buffer><expr> d
+#     \ denite#do_map('do_action', 'delete')
+#     nnoremap <silent><buffer><expr> p
+#     \ denite#do_map('do_action', 'preview')
+#     nnoremap <silent><buffer><expr> q
+#     \ denite#do_map('quit')
+#     nnoremap <silent><buffer><expr> <ESC>
+#     \ denite#do_map('quit')
+#     nnoremap <silent><buffer><expr> i
+#     \ denite#do_map('open_filter_buffer')
+#     nnoremap <silent><buffer><expr> <Space>
+#     \ denite#do_map('toggle_select').'j'
+#   endfunction
 
-  autocmd FileType denite set winblend=0
-  autocmd FileType denite-filter set winblend=0
+#   autocmd FileType denite set winblend=0
+#   autocmd FileType denite-filter set winblend=0
 
-  "nnoremap <leader>o :<C-u>Denite file/old<CR>
-  "nnoremap <leader>f :<C-u>DeniteBufferDir file/rec<CR>
-  nnoremap <Leader>b :<C-u>Denite buffer<CR>
-  nnoremap <Leader>r :<C-u>Denite register<CR>
-'''
+#   "nnoremap <leader>o :<C-u>Denite file/old<CR>
+#   "nnoremap <leader>f :<C-u>DeniteBufferDir file/rec<CR>
+#   nnoremap <Leader>b :<C-u>Denite buffer<CR>
+#   nnoremap <Leader>r :<C-u>Denite register<CR>
+# '''
 
 [[plugins]]
 repo = 'nabezokodaikon/denite-converter-basename_to_top'
@@ -443,16 +443,116 @@ repo = 'osyo-manga/vim-precious'
 # repo = 'Shougo/vimproc.vim'
 
 [[plugins]]
-repo = 'tyru/eskk.vim'
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops-helloworld.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
 hook_source = '''
-let g:eskk#directory = "~/.eskk"
-" let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 0, 'encoding': 'utf-8', }
-let g:eskk#large_dictionary = { 'path': "~/.eskk/SKK-JISYO.utf8.L", 'sorted': 1, 'encoding': 'utf-8', }
-let g:eskk#enable_completion = 0
-let g:eskk#server = {
-\   'host': '0.0.0.0',
-\   'port': 55000,
-\}
+call ddc#custom#patch_global('sources', ['around', 'skkeleton', 'deoppet'])
+
+call ddc#custom#patch_global('sourceOptions', {
+      \ 'around': {'mark': 'A'},
+      \ '_': {
+      \   'matchers': ['matcher_head'],
+      \   'sorters': ['sorter_rank']
+      \   },
+      \ 'skkeleton': {
+      \   'mark': 'skkeleton',
+      \   'matchers': ['skkeleton'],
+      \   'sorters': []
+      \   },
+      \ 'deoppet': {
+      \   'mark': 'dp',
+      \   'dup': v:true,
+      \   },
+      \ })
+
+call ddc#custom#patch_global('sourceParams', {
+      \ 'around': {'maxSize': 500},
+      \ })
+
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
+      \ 'clangd': {'mark': 'C'},
+      \ })
+call ddc#custom#patch_filetype('markdown', 'sourceParams', {
+      \ 'around': {'maxSize': 100},
+      \ })
+
+" Mappings
+
+" <TAB>: completion.
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? "\<C-n>" :
+\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+\ "\<TAB>" : ddc#manual_complete()
+
+" <S-TAB>: completion back.
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+call ddc#enable()
+'''
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+hook_source = '''
+function! s:skkeleton_init() abort
+  call skkeleton#config({
+    \ 'eggLikeNewline': v:true,
+    \ 'globalJisyo' : expand('~/.skk/SKK-JISYO.utf8.L'),
+    \ 'globalJisyoEncoding': 'utf-8',
+    \ })
+  call skkeleton#register_kanatable('rom', {
+    \ "z\<Space>": ["\u3000", ''],
+    \ })
+endfunction
+
+  imap <C-j> <Plug>(skkeleton-toggle)
+  cmap <C-j> <Plug>(skkeleton-toggle)
+
+autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+'''
+
+# [[plugins]]
+# repo = 'tyru/eskk.vim'
+# hook_source = '''
+# let g:eskk#directory = "~/.eskk"
+# let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 1, 'encoding': 'utf-8', }
+# let g:eskk#large_dictionary = { 'path': "~/.eskk/SKK-JISYO.utf8.L", 'sorted': 1, 'encoding': 'utf-8', }
+# let g:eskk#enable_completion = 0
+# " let g:eskk#no_default_mappings = 1
+# let g:eskk#keep_state = 0
+# let g:eskk#egg_like_newline = 1
+# let g:eskk#server = {
+# \   'host': '0.0.0.0',
+# \   'port': 55000,
+# \}
+# '''
+
+[[plugins]]
+repo = 'Shougo/deoppet.nvim'
+depends = ['neosnippet-snippets']
+hook_source = '''
+  call deoppet#initialize()
+  call deoppet#custom#option('snippets',
+    \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
+    \     { _, val -> { 'path': val } }))
+
+  imap <C-k>  <Plug>(deoppet_expand)
+  imap <C-f>  <Plug>(deoppet_jump_forward)
+  imap <C-b>  <Plug>(deoppet_jump_backward)
+  smap <C-f>  <Plug>(deoppet_jump_forward)
+  smap <C-b>  <Plug>(deoppet_jump_backward)
 '''
 
 [[plugins]] # カラースキーマ

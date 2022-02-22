@@ -21,11 +21,6 @@ hook_source = '''
 repo = 'haya14busa/is.vim'
 on_event = 'VimEnter'
 
-# [[plugins]]
-# repo = 'sheerun/vim-polyglot'
-# on_event = 'VimEnter'
-# on_event = ['BufReadPre', 'BufNewFile']
-
 [[plugins]]
 repo = 'cakebaker/scss-syntax.vim'
 on_event = 'VimEnter'
@@ -60,22 +55,6 @@ repo = 'easymotion/vim-easymotion'
 on_event = 'VimEnter'
 hook_source = '''
 '''
-
-# [[plugins]]
-# repo = 'tweekmonster/local-indent.vim'
-# on_event = 'VimEnter'
-# hook_add = '''
-#   autocmd FileType * LocalIndentGuide +hl +cc
-#   autocmd VimEnter,Colorscheme * :hi LocalIndentGuide ctermfg=236 ctermbg=237 cterm=inverse
-#   autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=237 guibg=#3a3a3a
-# '''
-
-# [[plugins]]
-# repo = 'alvan/vim-closetag'
-# on_event = 'InsertEnter'
-# hook_source = '''
-#   let g:closetag_filetypes = 'html,jinja'
-# '''
 
 # [[plugins]]
 # repo = 'prettier/vim-prettier'
@@ -166,68 +145,68 @@ hook_source = '''
 #   \ }
 # '''
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-on_i = 1
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# on_i = 1
+# hook_source = '''
+#   let g:deoplete#enable_at_startup = 1
 
-  call deoplete#custom#option({
-    \ 'auto_complete_delay': 0,
-    \ 'min_pattern_length': 2,
-  \})
+#   call deoplete#custom#option({
+#     \ 'auto_complete_delay': 0,
+#     \ 'min_pattern_length': 2,
+#   \})
 
-  call deoplete#custom#option('omni_patterns', {
-    \ 'java': '[^. *\t]\.\w*',
-    \ 'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-    \ 'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-    \ 'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-  \})
+#   call deoplete#custom#option('omni_patterns', {
+#     \ 'java': '[^. *\t]\.\w*',
+#     \ 'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+#     \ 'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+#     \ 'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+#   \})
 
-  call deoplete#custom#var('omni', 'functions', {
-  \ 'css,stylus': ['csscomplete#CompleteCSS']
-  \})
-'''
+#   call deoplete#custom#var('omni', 'functions', {
+#   \ 'css,stylus': ['csscomplete#CompleteCSS']
+#   \})
+# '''
 
 [[plugins]]
 repo = 'ncm2/float-preview.nvim'
 on_i = 1
 
-[[plugins]]
-repo = 'lighttiger2505/deoplete-vim-lsp'
-on_i = 1
+# [[plugins]]
+# repo = 'lighttiger2505/deoplete-vim-lsp'
+# on_i = 1
 
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets']
-on_i  = 1
-on_ft = ['snippet']
-hook_source = '''
-  " Plugin key-mappings.
-  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k>     <Plug>(neosnippet_expand_target)
+# [[plugins]]
+# repo = 'Shougo/neosnippet.vim'
+# depends = ['neosnippet-snippets']
+# on_i  = 1
+# on_ft = ['snippet']
+# hook_source = '''
+#   " Plugin key-mappings.
+#   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+#   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+#   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+#   xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-  " SuperTab like snippets behavior.
-  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-  "imap <expr><TAB>
-  " \ pumvisible() ? "\<C-n>" :
-  " \ neosnippet#expandable_or_jumpable() ?
-  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+#   " SuperTab like snippets behavior.
+#   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+#   "imap <expr><TAB>
+#   " \ pumvisible() ? "\<C-n>" :
+#   " \ neosnippet#expandable_or_jumpable() ?
+#   " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+#   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+#   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-  " For conceal markers.
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
+#   " For conceal markers.
+#   if has('conceal')
+#     set conceallevel=2 concealcursor=niv
+#   endif
 
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-  let g:neosnippet#scope_aliases = {}
-  let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
-'''
+#   let g:neosnippet#enable_snipmate_compatibility = 1
+#   let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+#   let g:neosnippet#scope_aliases = {}
+#   let g:neosnippet#scope_aliases['jinja'] = 'html,twig'
+# '''
 
 # [[plugins]]
 # repo = 'neoclide/coc.nvim'
@@ -339,6 +318,9 @@ on_event = 'VimEnter'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_event = 'InsertEnter'
+hook_source = '''
+  call lexima#add_rule({'char': '"', 'input_after': ''})
+'''
 
 [[plugins]]
 repo = 'Valloric/MatchTagAlways'
@@ -369,3 +351,4 @@ on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
 
 [[plugins]]
 repo = 'junegunn/goyo.vim'
+
