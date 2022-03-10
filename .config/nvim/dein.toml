@@ -149,6 +149,9 @@ depends = ['junegunn/fzf']
 # repo = 'LeafCage/yankround.vim'
 
 [[plugins]]
+repo = 'tversteeg/registers.nvim'
+
+[[plugins]]
 repo = 'Shougo/defx.nvim'
 hook_add = '''
   if !has('nvim')
