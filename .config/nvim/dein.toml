@@ -70,9 +70,9 @@ repo = 'Shougo/dein.vim'
 #   nnoremap <Leader>r :<C-u>Denite register<CR>
 # '''
 
-[[plugins]]
-repo = 'nabezokodaikon/denite-converter-basename_to_top'
-depends = ['denite.nvim']
+# [[plugins]]
+# repo = 'nabezokodaikon/denite-converter-basename_to_top'
+# depends = ['denite.nvim']
 
 # [[plugins]]
 # repo = 'Shougo/neomru.vim'
@@ -87,7 +87,7 @@ repo = 'junegunn/fzf.vim'
 hook_add = '''
   nnoremap <Leader>f :<C-u>ProjectFiles<CR>
   nnoremap <Leader>h :<C-u>History<CR>
-  "nnoremap <Leader>b :<C-u>Buffers<CR>
+  nnoremap <Leader>b :<C-u>Buffers<CR>
 
   function! s:find_git_root()
     " プロジェクトルートで開く
@@ -169,7 +169,8 @@ hook_add = '''
     \ 'indent': '  ',
   \ })
 
-  nnoremap <silent><C-e> :Defx -auto-cd -resume `expand('%:p:h')`<CR>
+  " nnoremap <silent><C-e> :Defx -auto-cd -resume `expand('%:p:h')`<CR>
+  nnoremap <silent><leader>t :<C-u> Defx -auto-cd -resume `expand('%:p:h')`<CR>
 
   autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
