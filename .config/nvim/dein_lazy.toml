@@ -10,38 +10,38 @@ on_event = 'VimEnter'
 #   tnoremap <ESC> <C-\><C-n>
 # '''
 
-[[plugins]]
-repo = 'osyo-manga/vim-over'
-on_event = 'VimEnter'
-hook_source = '''
-  nnoremap <silent> ,m :OverCommandLine<CR>
-'''
+# [[plugins]]
+# repo = 'osyo-manga/vim-over'
+# on_event = 'VimEnter'
+# hook_source = '''
+#   nnoremap <silent> ,m :OverCommandLine<CR>
+# '''
 
-[[plugins]]
-repo = 'haya14busa/is.vim'
-on_event = 'VimEnter'
+# [[plugins]]
+# repo = 'haya14busa/is.vim'
+# on_event = 'VimEnter'
 
-[[plugins]]
-repo = 'cakebaker/scss-syntax.vim'
-on_event = 'VimEnter'
+# [[plugins]]
+# repo = 'cakebaker/scss-syntax.vim'
+# on_event = 'VimEnter'
 
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_event = 'VimEnter'
+# [[plugins]]
+# repo = 'cespare/vim-toml'
+# on_event = 'VimEnter'
 
 [[plugins]]
 repo = 'lumiliet/vim-twig'
 on_event = 'VimEnter'
 
-[[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-on_event = 'VimEnter'
-hook_add = '''
-  let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_auto_colors = 0
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=none
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#121212 ctermbg=233
-'''
+# [[plugins]]
+# repo = 'nathanaelkane/vim-indent-guides'
+# on_event = 'VimEnter'
+# hook_add = '''
+#   let g:indent_guides_enable_on_vim_startup = 1
+#   let g:indent_guides_auto_colors = 0
+#   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=none
+#   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#121212 ctermbg=233
+# '''
 
 [[plugins]]
 repo = 'rhysd/clever-f.vim'
@@ -168,9 +168,9 @@ hook_source = '''
 #   \})
 # '''
 
-[[plugins]]
-repo = 'ncm2/float-preview.nvim'
-on_i = 1
+# [[plugins]]
+# repo = 'ncm2/float-preview.nvim'
+# on_i = 1
 
 # [[plugins]]
 # repo = 'lighttiger2505/deoplete-vim-lsp'
@@ -315,12 +315,12 @@ on_event = 'VimEnter'
 repo = 'tpope/vim-repeat'
 on_event = 'VimEnter'
 
-[[plugins]]
-repo = 'cohama/lexima.vim'
-on_event = 'InsertEnter'
-hook_source = '''
-  call lexima#add_rule({'char': '"', 'input_after': ''})
-'''
+# [[plugins]]
+# repo = 'cohama/lexima.vim'
+# on_event = 'InsertEnter'
+# hook_source = '''
+#   call lexima#add_rule({'char': '"', 'input_after': ''})
+# '''
 
 [[plugins]]
 repo = 'Valloric/MatchTagAlways'
@@ -345,10 +345,108 @@ hook_source = '''
   autocmd BufNewFile,BufRead *.pcss setlocal commentstring=/*\ %s\ */
 '''
 
-[[plugins]]
-repo = 'lilydjwg/colorizer'
-on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
+# [[plugins]]
+# repo = 'lilydjwg/colorizer'
+# on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
 
 [[plugins]]
 repo = 'junegunn/goyo.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+on_event = 'InsertEnter'
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+on_event = 'InsertEnter'
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+call ddc#custom#patch_global('sources', ['around', 'skkeleton', 'deoppet'])
+
+call ddc#custom#patch_global('sourceOptions', {
+      \ 'around': {'mark': 'A'},
+      \ '_': {
+      \   'matchers': ['matcher_head'],
+      \   'sorters': ['sorter_rank']
+      \   },
+      \ 'skkeleton': {
+      \   'mark': 'skkeleton',
+      \   'matchers': ['skkeleton'],
+      \   'sorters': []
+      \   },
+      \ 'deoppet': {
+      \   'mark': 'dp',
+      \   'dup': v:true,
+      \   },
+      \ })
+
+call ddc#custom#patch_global('sourceParams', {
+      \ 'around': {'maxSize': 500},
+      \ })
+
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
+      \ 'clangd': {'mark': 'C'},
+      \ })
+call ddc#custom#patch_filetype('markdown', 'sourceParams', {
+      \ 'around': {'maxSize': 100},
+      \ })
+
+" Mappings
+
+" <TAB>: completion.
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? "\<C-n>" :
+\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+\ "\<TAB>" : ddc#manual_complete()
+
+" <S-TAB>: completion back.
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+call ddc#enable()
+'''
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+on_source = 'ddc.vim'
+hook_source = '''
+function! s:skkeleton_init() abort
+  call skkeleton#config({
+    \ 'eggLikeNewline': v:true,
+    \ 'globalJisyo' : expand('~/.skk/SKK-JISYO.utf8.L'),
+    \ 'globalJisyoEncoding': 'utf-8',
+    \ })
+  call skkeleton#register_kanatable('rom', {
+    \ "z\<Space>": ["\u3000", ''],
+    \ })
+endfunction
+
+  imap <C-j> <Plug>(skkeleton-toggle)
+  cmap <C-j> <Plug>(skkeleton-toggle)
+
+autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+'''
+
+# [[plugins]]
+# repo = 'tyru/eskk.vim'
+# on_event = 'InsertEnter'
+# on_map = {ic = '<Plug>'}
+# hook_source = '''
+# let g:eskk#directory = "~/.eskk"
+# let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 1, 'encoding': 'utf-8', }
+# let g:eskk#large_dictionary = { 'path': "~/.skk/SKK-JISYO.utf8.L", 'sorted': 1, 'encoding': 'utf-8', }
+# let g:eskk#enable_completion = 0
+# " let g:eskk#no_default_mappings = 1
+# let g:eskk#keep_state = 0
+# let g:eskk#egg_like_newline = 1
+# let g:eskk#server = {
+# \   'host': '0.0.0.0',
+# \   'port': 55000,
+# \}
+# '''
 

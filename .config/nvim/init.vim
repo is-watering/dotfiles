@@ -30,6 +30,7 @@ set hlsearch
 hi Search ctermbg=43
 hi Search ctermfg=20
 " set winblend=1 " Floating windows pseudo-transparency
+set inccommand=split
 
 au BufNewFile,BufRead *.{css,sass,scss,pcss,styl} set filetype=scss.css
 au BufNewFile,BufRead *.{njk} set filetype=html.twig
@@ -113,7 +114,7 @@ let s:lazy_toml = s:toml_dir . '/dein_lazy.toml'
   call dein#save_state()
 endif
 
-colorscheme twilight256
+" colorscheme twilight256
 
 " Required:
 filetype plugin indent on
