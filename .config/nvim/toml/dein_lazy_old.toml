@@ -1,7 +1,3 @@
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_event = 'VimEnter'
-
 # [[plugins]]
 # repo = 'Shougo/deol.nvim'
 # on_map = '<Leader>P'
@@ -26,12 +22,15 @@ on_event = 'VimEnter'
 # on_event = 'VimEnter'
 
 # [[plugins]]
+# repo = 'nvim-treesitter/nvim-treesitter'
+# merged = 0
+# on_event = 'BufRead'
+# hook_post_update = 'TSUpdate'
+# hook_source = 'source ~/.config/nvim/plugins/nvim-treesitter.lua'
+
+# [[plugins]]
 # repo = 'cespare/vim-toml'
 # on_event = 'VimEnter'
-
-[[plugins]]
-repo = 'lumiliet/vim-twig'
-on_event = 'VimEnter'
 
 # [[plugins]]
 # repo = 'nathanaelkane/vim-indent-guides'
@@ -42,19 +41,6 @@ on_event = 'VimEnter'
 #   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=none
 #   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#121212 ctermbg=233
 # '''
-
-[[plugins]]
-repo = 'rhysd/clever-f.vim'
-on_event = 'VimEnter'
-hook_source = '''
-  nmap <Esc> <Plug>(clever-f-reset)
-'''
-
-[[plugins]]
-repo = 'easymotion/vim-easymotion'
-on_event = 'VimEnter'
-hook_source = '''
-'''
 
 # [[plugins]]
 # repo = 'prettier/vim-prettier'
@@ -220,100 +206,12 @@ hook_source = '''
 #     \ }
 # '''
 
-[[plugins]]
-repo = 'mattn/emmet-vim'
-on_event = 'InsertEnter'
-hook_source = '''
-  let g:user_emmet_mode = 'iv'
-  let g:user_emmet_settings = {
-    \ 'variables' : {
-    \   'lang' : 'ja'
-    \ }
-  \ }
-  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-'''
-
-[[plugins]]
-repo = 'uplus/vim-clurin'
-on_event = 'VimEnter'
-hook_source = '''
-  nnoremap <silent> <C-a> :<C-u>ClurinNext<CR>
-  nnoremap <silent> <C-x> :<C-u>ClurinPrev<CR>
-  vnoremap <silent> <C-a> :call clurin#pa(+v:count1, 1)<CR>
-  vnoremap <silent> <C-x> :call clurin#pa(-v:count1, 1)<CR>
-
-  function! g:CountUp(strs, cnt, def) abort
-    " a:strs: matched text list
-    " a:cnt: non zero.
-    " a:def: definition
-    return str2nr(a:strs[0]) + a:cnt
-  endfunction
-
-  function! g:CtrlAX(cnt) abort
-    if a:cnt >= 0
-      execute 'normal!' a:cnt . "\<C-A>"
-    else
-      execute 'normal!' (-a:cnt) . "\<C-X>"
-    endif
-  endfunction
-
-  " for RSpec
-  au BufRead *_spec.rb let b:clurin = [
-    \ ['be_truthy', 'be_falsey'],
-    \ [{'pattern': '\.to_not ', 'replace': '.to '}]
-  \ ]
-
-  let g:clurin = {
-    \ '-': { 'def': [
-    \   [
-    \     {'pattern': '\(-\?\d\+\)', 'replace': function('g:CountUp')},
-    \   ],
-    \   ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    \   ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
-    \   ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    \   ['月', '火', '水', '木', '金', '土', '日'],
-    \   ['臨', '兵', '闘', '者', '皆', '陣', '烈', '在', '前'],
-    \   ['true', 'false'],
-    \   ['True', 'False'],
-    \   ['on', 'off'],
-    \   ['On', 'Off'],
-    \   ['enable', 'disable'],
-    \   ['Enable', 'Disable'],
-    \   ['left', 'right'],
-    \ ]},
-    \ 'vim': {'def': [
-    \   [
-    \     {'pattern': '\[''\(\k\+\)''\]', 'replace': '[''\1'']'},
-    \     {'pattern': '\["\(\k\+\)"\]',   'replace': '["\1"]'},
-    \     {'pattern': '\.\(\k\+\)',       'replace': '.\1'},
-    \   ],
-    \   ['nmap', 'vmap', 'imap'],
-    \   ['nnoremap', 'vnoremap', 'inoremap'],
-    \ ]},
-    \ 'c cpp' : {'def': [
-    \   [ '&&', '||' ],
-    \   [
-    \     {'pattern': '\(\k\+\)\.', 'replace': '\1.'},
-    \     {'pattern': '\(\k\+\)->', 'replace': '\1->'},
-    \   ]
-    \ ], 'nomatch': function('g:CtrlAX')},
-  \ }
-'''
-
 # [[plugins]]
 # repo = 'tpope/vim-speeddating'
 # on_event = 'VimEnter'
 # hook_source = '''
 #   SpeedDatingFormat %m/%d%(%a) " 1/1(月)
 # '''
-
-[[plugins]]
-repo = 'tpope/vim-surround'
-on_event = 'VimEnter'
-
-[[plugins]]
-repo = 'tpope/vim-repeat'
-on_event = 'VimEnter'
 
 # [[plugins]]
 # repo = 'cohama/lexima.vim'
@@ -322,29 +220,6 @@ on_event = 'VimEnter'
 #   call lexima#add_rule({'char': '"', 'input_after': ''})
 # '''
 
-[[plugins]]
-repo = 'Valloric/MatchTagAlways'
-on_event = 'VimEnter'
-hook_add = '''
-  let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'html.twig' : 1,
-  \ }
-  let g:mta_use_matchparen_group = 0
-'''
-
-[[plugins]]
-repo = 'tpope/vim-commentary'
-on_event = 'VimEnter'
-hook_source = '''
-  autocmd FileType jinja setlocal commentstring={#-\ %s\ #}
-  autocmd FileType html.twig setlocal commentstring={#-\ %s\ #}
-  autocmd BufNewFile,BufRead *.pcss setlocal commentstring=/*\ %s\ */
-'''
-
 # [[plugins]]
 # repo = 'lilydjwg/colorizer'
 # on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
@@ -352,85 +227,16 @@ hook_source = '''
 [[plugins]]
 repo = 'junegunn/goyo.vim'
 
-[[plugins]]
-repo = 'Shougo/ddc-around'
-on_event = 'InsertEnter'
-[[plugins]]
-repo = 'Shougo/ddc-matcher_head'
-on_event = 'InsertEnter'
-[[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
-on_event = 'InsertEnter'
+# [[plugins]]
+# repo = 'Shougo/ddc-ui-native'
+# on_event = 'InsertEnter'
 
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-on_event = 'InsertEnter'
-hook_source = '''
-call ddc#custom#patch_global('sources', ['around', 'skkeleton', 'deoppet'])
-
-call ddc#custom#patch_global('sourceOptions', {
-      \ 'around': {'mark': 'A'},
-      \ '_': {
-      \   'matchers': ['matcher_head'],
-      \   'sorters': ['sorter_rank']
-      \   },
-      \ 'skkeleton': {
-      \   'mark': 'skkeleton',
-      \   'matchers': ['skkeleton'],
-      \   'sorters': []
-      \   },
-      \ 'deoppet': {
-      \   'mark': 'dp',
-      \   'dup': v:true,
-      \   },
-      \ })
-
-call ddc#custom#patch_global('sourceParams', {
-      \ 'around': {'maxSize': 500},
-      \ })
-
-call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
-call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
-      \ 'clangd': {'mark': 'C'},
-      \ })
-call ddc#custom#patch_filetype('markdown', 'sourceParams', {
-      \ 'around': {'maxSize': 100},
-      \ })
-
-" Mappings
-
-" <TAB>: completion.
-inoremap <silent><expr> <TAB>
-\ pumvisible() ? "\<C-n>" :
-\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-\ "\<TAB>" : ddc#manual_complete()
-
-" <S-TAB>: completion back.
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
-call ddc#enable()
-'''
-
-[[plugins]]
-repo = 'vim-skk/skkeleton'
-on_source = 'ddc.vim'
-hook_source = '''
-function! s:skkeleton_init() abort
-  call skkeleton#config({
-    \ 'eggLikeNewline': v:true,
-    \ 'globalJisyo' : expand('~/.skk/SKK-JISYO.utf8.L'),
-    \ 'globalJisyoEncoding': 'utf-8',
-    \ })
-  call skkeleton#register_kanatable('rom', {
-    \ "z\<Space>": ["\u3000", ''],
-    \ })
-endfunction
-
-  imap <C-j> <Plug>(skkeleton-toggle)
-  cmap <C-j> <Plug>(skkeleton-toggle)
-
-autocmd User skkeleton-initialize-pre call s:skkeleton_init()
-'''
+# [[plugins]]
+# repo = 'Shougo/ddc-source-cmdline'
+# on_event = 'InsertEnter'
+# [[plugins]]
+# repo = 'Shougo/ddc-source-cmdline-history'
+# on_event = 'InsertEnter'
 
 # [[plugins]]
 # repo = 'tyru/eskk.vim'

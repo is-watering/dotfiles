@@ -1,0 +1,151 @@
+#[[plugins]]
+#repo = 'Shougo/dein.vim'
+
+# [[plugins]]
+# repo = 'Shougo/denite.nvim'
+# hook_add = '''
+#   let s:denite_win_width_percent = 0.8
+#   let s:denite_win_height_percent = 0.4
+
+#   call denite#custom#option('default', {
+#     "\ 'auto_action': 'preview',
+#     \ 'direction': 'botright',
+#     \ 'split': 'floating',
+#     \ 'filter_split_direction': 'floating',
+#     \ 'prompt': '🐝',
+#     \ 'statusline': v:true,
+#     \ 'floating_preview': v:true,
+#     \ 'vertical_preview': v:true,
+#     \ 'preview_width': float2nr(&columns * s:denite_win_width_percent),
+#     \ 'preview_height': float2nr(&lines * s:denite_win_height_percent),
+#     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+#     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+#     \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+#     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+#     \ 'cached_filter': v:true,
+#     \ 'cursor_shape': v:true,
+#     \ 'cursor_wrap': v:true,
+#     \ 'start_filter': v:false,
+#     \ 'match_highlight': v:true,
+#     \ 'highlight_prompt': 'Search',
+#     \ 'highlight_filter_background': 'Search',
+#     \ 'highlight_matched_char': 'Search',
+#     \ 'highlight_matched_range': 'Search',
+#     \ 'highlight_window_background': 'NormalFloat',
+#   \ })
+
+#   autocmd FileType denite highlight Search ctermfg=226 ctermbg=232
+#   autocmd FileType denite highlight Pmenu ctermfg=199 ctermbg=85
+#   autocmd FileType denite highlight PmenuSel ctermfg=226 ctermbg=196
+
+#   "call denite#custom#source('file/old,file_mru,file/rec', 'converters',
+#   "  \ ['converter_relative_word'])
+#   "call denite#custom#source('file/old,file_mru', 'converters',
+#   "  \ ['converter/basename_to_top'])
+
+#   autocmd FileType denite call s:denite_my_settings()
+#   function! s:denite_my_settings() abort
+#     nnoremap <silent><buffer><expr> <CR>
+#     \ denite#do_map('do_action')
+#     nnoremap <silent><buffer><expr> d
+#     \ denite#do_map('do_action', 'delete')
+#     nnoremap <silent><buffer><expr> p
+#     \ denite#do_map('do_action', 'preview')
+#     nnoremap <silent><buffer><expr> q
+#     \ denite#do_map('quit')
+#     nnoremap <silent><buffer><expr> <ESC>
+#     \ denite#do_map('quit')
+#     nnoremap <silent><buffer><expr> i
+#     \ denite#do_map('open_filter_buffer')
+#     nnoremap <silent><buffer><expr> <Space>
+#     \ denite#do_map('toggle_select').'j'
+#   endfunction
+
+#   autocmd FileType denite set winblend=0
+#   autocmd FileType denite-filter set winblend=0
+
+#   "nnoremap <leader>o :<C-u>Denite file/old<CR>
+#   "nnoremap <leader>f :<C-u>DeniteBufferDir file/rec<CR>
+#   nnoremap <Leader>b :<C-u>Denite buffer<CR>
+#   nnoremap <Leader>r :<C-u>Denite register<CR>
+# '''
+
+# [[plugins]]
+# repo = 'nabezokodaikon/denite-converter-basename_to_top'
+# depends = ['denite.nvim']
+
+# [[plugins]]
+# repo = 'Shougo/neomru.vim'
+
+
+# [[plugins]]
+# repo = 'yuki-ycino/fzf-preview.vim'
+# rev = 'release'
+# hook_add = '''
+#   let g:fzf_preview_default_fzf_options = {
+#     "\ '--reverse': v:true,
+#     \ '--preview-window': '',
+#     \ }
+#   let g:fzf_preview_use_dev_icons = 1
+#   let g:fzf_preview_dev_icon_prefix_string_length = 10
+
+#   nmap <Leader>f [fzf-p]
+#   xmap <Leader>f [fzf-p]
+#   nnoremap <Leader>f :<C-u>FzfPreviewProjectFiles<CR>
+#   nnoremap <Leader>b :<C-u>FzfPreviewBuffers<CR>
+#   nnoremap <Leader>m :<C-u>FzfPreviewProjectOldFiles<CR>
+#   nnoremap <Leader>h :FzfPreviewOldFiles<CR>
+#   nnoremap <Leader>r :FzfPreviewYankround<CR>
+# '''
+
+# [[plugins]]
+# repo = 'LeafCage/yankround.vim'
+
+# [[plugins]]
+# repo = 'ryanoasis/vim-devicons'
+# hook_add = '''
+#   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+# '''
+
+# [[plugins]]
+# repo = 'cocopon/vaffle.vim'
+# hook_add = '''
+#   nnoremap <silent><C-e> :Vaffle<CR>
+#
+#   let g:vaffle_auto_cd = 1
+# '''
+
+# [[plugins]]
+# repo = 'scrooloose/nerdtree'
+# hook_add = '''
+#   nnoremap <silent><expr> <C-e> g:NERDTree.IsOpen() ? ":NERDTreeClose\<CR>" : ":NERDTreeFind\<CR>"
+#   let g:NERDTreeWinSize = 28 " ファイルを開いたらNERDTreeを閉じる
+#   let g:NERDTreeQuitOnOpen=1 " NERDTreeを同時に閉じる
+#   let g:NERDTreeShowHidden=1 " 隠しファイルを表示する
+#   autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+# '''
+
+# [[plugins]]
+# repo = 'severin-lemaignan/vim-minimap'
+
+# [[plugins]]
+# repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'sgur/vim-editorconfig'
+
+# [[plugins]]
+# repo = 'tmhedberg/matchit'
+
+# [[plugins]]
+# repo = 'tpope/vim-fugitive'
+
+# [[plugins]]
+# repo = 'honza/vim-snippets'
+
+# [[plugins]]
+# repo = 'Shougo/vimproc.vim'
+
+# [[plugins]]
+# repo = 'vim-denops/denops-helloworld.vim'
+

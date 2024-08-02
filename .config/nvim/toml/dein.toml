@@ -1,0 +1,103 @@
+[[plugins]]
+repo = 'goolord/alpha-nvim'
+hooks_file = '$TOML_DIR/hooks_file/alpha-nvim.lua'
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = ['junegunn/fzf']
+hooks_file = '$TOML_DIR/hooks_file/fzf.vim'
+
+[[plugins]]
+repo = 'tversteeg/registers.nvim'
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hooks_file = '$TOML_DIR/hooks_file/defx.vim'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+depends = ['defx.nvim']
+hooks_file = '$TOML_DIR/hooks_file/defx-icons.vim'
+
+[[plugins]]
+repo = 'skanehira/vsession'
+hooks_file = '$TOML_DIR/hooks_file/vsession.vim'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hooks_file = '$TOML_DIR/hooks_file/lightline.vim'
+
+[[plugins]]
+repo = 'sgur/vim-editorconfig'
+
+[[plugins]]
+repo = 'andymass/vim-matchup'
+# on_event = 'InsertEnter'
+hooks_file = '$TOML_DIR/hooks_file/vim-matchup.vim'
+
+# [[plugins]]
+# repo = 'tpope/vim-sleuth'
+
+[[plugins]]
+repo = 'itchyny/vim-gitbranch'
+
+[[plugins]]
+repo = 'delphinus/vim-auto-cursorline'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+hooks_file = '$TOML_DIR/hooks_file/vim-lsp-settings.vim'
+
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
+
+# [[plugins]]
+# repo = 'thinca/vim-partedit'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hooks_file = '$TOML_DIR/hooks_file/context_filetype.vim'
+
+# [[plugins]]
+# repo = 'osyo-manga/vim-precious'
+# depends = ['context_filetype.vim']
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+# [[plugins]]
+# repo = 'vim-denops/denops-helloworld.vim'
+
+[[plugins]]
+repo = 'Shougo/deoppet.nvim'
+depends = ['neosnippet-snippets']
+hooks_file = '$TOML_DIR/hooks_file/deoppet.vim'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = 0
+# hook_post_update = 'TSUpdate'
+hooks_file = '$TOML_DIR/hooks_file/nvim-treesitter.lua'
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+on_source = 'ddc.vim'
+hooks_file = '$TOML_DIR/hooks_file/skkeleton.vim'
+
+[[plugins]]
+repo = 'yasunori0418/statusline_skk.vim'
+on_source = 'skkeleton'
+hooks_file = '$TOML_DIR/hooks_file/statusline_skk.vim'
+
+[[plugins]] # カラースキーマ
+repo = 'vim-scripts/twilight256.vim'
+# repo = 'neanias/everforest-nvim'
+

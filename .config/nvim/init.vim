@@ -5,11 +5,11 @@ set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set guifont=Cica:h14
-set printfont=Cica:h14
+" set printfont=Cica:h14
 set ambiwidth=single
 set number " 行番号を表示
 " set relativenumber " 相対行番号を表示
-set autoindent " 改行時に自動でインデントする
+" set autoindent " 改行時に自動でインデントする
 set wrap " 自動折り返しを有効
 " set cursorline " カーソルラインを有効
 set mouse=a
@@ -31,6 +31,8 @@ hi Search ctermbg=43
 hi Search ctermfg=20
 " set winblend=1 " Floating windows pseudo-transparency
 set inccommand=split
+set wildmenu
+set wildoptions=pum
 
 au BufNewFile,BufRead *.{css,sass,scss,pcss,styl} set filetype=scss.css
 au BufNewFile,BufRead *.{njk} set filetype=html.twig
@@ -46,6 +48,9 @@ nnoremap ,p "+p
 vnoremap ,p "+p
 nnoremap ,P "+P
 vnoremap ,P "+P
+
+" Python path
+let g:python3_host_prog = '~/.rye/shims/python3'
 
 " ビジュアルモードで連続ペースト
 vnoremap <silent> <C-p> "0p<CR>
@@ -85,44 +90,54 @@ endif
 """"""""""""""""""""""""""""""
 
 "dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
+" Ward off unexpected things that your distro might have made, as
+" well as sanely reset options when re-sourcing .vimrc
+set nocompatible
 
-" Required:
-set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
+" Set Dein base path (required)
+let s:dein_base = '/home/pp/.cache/dein'
 
-" Required:
-if dein#load_state('$HOME/.cache/dein')
-  call dein#begin('$HOME/.cache/dein')
+" Set Dein source path (required)
+let s:dein_src = '/home/pp/.cache/dein/repos/github.com/Shougo/dein.vim'
+
+" Set Dein runtime path (required)
+execute 'set runtimepath+=' . s:dein_src
+
+" Call Dein initialization (required)
+call dein#begin(s:dein_base)
+
+call dein#add(s:dein_src)
+
+" Your plugins go here:
+"call dein#add('Shougo/neosnippet.vim')
+"call dein#add('Shougo/neosnippet-snippets')
 
 " Let dein manage dein
-let s:toml_dir  = $HOME . '/.config/nvim/'
+let s:toml_dir  = $HOME . '/.config/nvim/toml/'
 let s:toml      = s:toml_dir . '/dein.toml'
+let s:ddc       = s:toml_dir . '/ddc.toml'
 let s:lazy_toml = s:toml_dir . '/dein_lazy.toml'
+let $TOML_DIR = s:toml_dir
 
-  " Required:
+" Add or remove your plugins here like this:
+call dein#load_toml(s:toml,      {'lazy': 0})
+call dein#load_toml(s:ddc,       {'lazy': 1})
+call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-  " Add or remove your plugins here like this:
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
-  "call dein#add('Shougo/neosnippet.vim')
-  "call dein#add('Shougo/neosnippet-snippets')
+" Finish Dein initialization (required)
+call dein#end()
 
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype indent plugin on
 
-" colorscheme twilight256
-
-" Required:
-filetype plugin indent on
+" Enable syntax highlighting
 syntax enable
 
-" If you want to install not installed plugins on startup.
+" Uncomment if you want to install not-installed plugins on startup.
 if dein#check_install()
-  call dein#install()
+ call dein#install()
 endif
 
 "End dein Scripts-------------------------
@@ -137,5 +152,4 @@ hi PmenuSbar ctermbg=249
 hi PmenuThumb ctermfg=240
 
 hi NormalFloat ctermfg=250 ctermbg=240
-
 

@@ -1,0 +1,77 @@
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'lumiliet/vim-twig'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+on_event = 'VimEnter'
+hook_source = '''
+  nmap <Esc> <Plug>(clever-f-reset)
+'''
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+on_event = 'VimEnter'
+
+# [[plugins]]
+# repo = 'prettier/vim-prettier'
+# build = 'npm install'
+# on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+# hooks_file = '$TOML_DIR/hooks_file/vim-prettier.vim'
+
+# [[plugins]]
+# repo = 'dense-analysis/ale'
+# on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+# hooks_file = '$TOML_DIR/hooks_file/ale.vim'
+
+# [[plugins]]
+# repo = 'maximbaz/lightline-ale'
+# depends = ['lightline.vim', 'ale']
+# on_source = ['ale']
+# hooks_file = '$TOML_DIR/hooks_file/lightline-ale.vim'
+
+# [[plugins]]
+# repo = 'neomake/neomake'
+# on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+# hooks_file = '$TOML_DIR/hooks_file/neomake.vim'
+
+# [[plugins]]
+# repo = 'sbdchd/neoformat'
+# on_cmd = 'Neoformat'
+# hooks_file = '$TOML_DIR/hooks_file/neoformat.vim'
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_event = 'InsertEnter'
+hooks_file = '$TOML_DIR/hooks_file/emmet-vim.vim'
+
+[[plugins]]
+repo = 'uplus/vim-clurin'
+on_event = 'VimEnter'
+hooks_file = '$TOML_DIR/hooks_file/vim-clurin.vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'Valloric/MatchTagAlways'
+on_event = 'VimEnter'
+hooks_file = '$TOML_DIR/hooks_file/MatchTagAlways.vim'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+on_event = 'VimEnter'
+hooks_file = '$TOML_DIR/hooks_file/vim-commentary.vim'
+
+[[plugins]]
+repo = 'junegunn/goyo.vim'
+
