@@ -224,9 +224,6 @@
 # repo = 'lilydjwg/colorizer'
 # on_ft = ['css', 'scss', 'html', 'jinja', 'vue', 'markdown']
 
-[[plugins]]
-repo = 'junegunn/goyo.vim'
-
 # [[plugins]]
 # repo = 'Shougo/ddc-ui-native'
 # on_event = 'InsertEnter'

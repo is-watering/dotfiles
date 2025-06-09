@@ -18,9 +18,9 @@ export RANGER_DEVICONS_SEPARATOR='  '
 # fzf
 
 # keychain
-if status --is-interactive
-  keychain --quiet --agents ssh
-end
+# if status --is-interactive
+#   keychain --quiet --agents ssh
+# end
 
 begin
   set -l HOSTNAME (hostname)
@@ -33,6 +33,8 @@ end
 set -x YVM_DIR /home/pp/.yvm
 [ -r $YVM_DIR/yvm.fish ]; and source $YVM_DIR/yvm.fish
 
-# asdf
-source /opt/asdf-vm/asdf.fish
+# fish
+source .venv/bin/activate.fish
 
+# uv generate-shell-completion fish | source
+mise activate fish --shims | source

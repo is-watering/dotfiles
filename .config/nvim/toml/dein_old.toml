@@ -131,9 +131,6 @@
 # [[plugins]]
 # repo = 'editorconfig/editorconfig-vim'
 
-[[plugins]]
-repo = 'sgur/vim-editorconfig'
-
 # [[plugins]]
 # repo = 'tmhedberg/matchit'
 

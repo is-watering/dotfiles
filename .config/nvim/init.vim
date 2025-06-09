@@ -4,12 +4,14 @@ filetype plugin indent off
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
-set guifont=Cica:h14
+" set guifont=Cica:h14
+set guifont=HackGenConsoleNF:h14
+" set guifont=PlemolJPConsoleNf:h14
 " set printfont=Cica:h14
 set ambiwidth=single
 set number " 行番号を表示
 " set relativenumber " 相対行番号を表示
-" set autoindent " 改行時に自動でインデントする
+set noautoindent " 改行時の自動インデント
 set wrap " 自動折り返しを有効
 " set cursorline " カーソルラインを有効
 set mouse=a
@@ -50,7 +52,8 @@ nnoremap ,P "+P
 vnoremap ,P "+P
 
 " Python path
-let g:python3_host_prog = '~/.rye/shims/python3'
+" let g:python3_host_prog = '/usr/sbin/python3'
+let g:python3_host_prog = system('echo -n $(which python3)')
 
 " ビジュアルモードで連続ペースト
 vnoremap <silent> <C-p> "0p<CR>

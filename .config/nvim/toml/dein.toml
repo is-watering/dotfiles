@@ -1,6 +1,6 @@
-[[plugins]]
-repo = 'goolord/alpha-nvim'
-hooks_file = '$TOML_DIR/hooks_file/alpha-nvim.lua'
+# [[plugins]]
+# repo = 'goolord/alpha-nvim'
+# hooks_file = '$TOML_DIR/hooks_file/alpha-nvim.lua'
 
 [[plugins]]
 repo = 'junegunn/fzf'
